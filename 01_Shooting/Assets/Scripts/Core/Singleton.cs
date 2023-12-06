@@ -102,7 +102,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
             OnPreInitialize();
         }
 
-        if (mode == LoadSceneMode.Single)
+        if (mode != LoadSceneMode.Additive)
         {
             OnInitialize();
         }
@@ -111,7 +111,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// <summary>
     /// 싱글톤이 처음 만들어 졌을 때 실행할 초기화용 함수
     /// </summary>
-    private void OnPreInitialize()
+    protected virtual void OnPreInitialize()
     {
         initialized = true;
     }
@@ -119,7 +119,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
     /// <summary>
     /// 씬이 Single로 로딩될 때 마다 실행할 초기화용 함수
     /// </summary>
-    private void OnInitialize()
+    protected virtual void OnInitialize()
     {
 
     }
