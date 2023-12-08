@@ -14,6 +14,9 @@ public class EnemyBase : PoolObject
     /// </summary>
     private int health;
 
+    /// <summary>
+    /// 체력 설정 및 확인 프로퍼티
+    /// </summary>
     public int Health
     {
         get => health;
@@ -64,6 +67,7 @@ public class EnemyBase : PoolObject
     protected virtual void Die()
     {
         // 터지는 이펙트 생성
+        Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position);
 
         onDie?.Invoke(score);
 

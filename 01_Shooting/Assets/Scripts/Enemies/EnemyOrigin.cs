@@ -2,17 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyOrigin : MonoBehaviour
+public class EnemyOrigin : EnemyBase
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    // 왼쪽으로 오는 적
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        
+        transform.position += Time.deltaTime * Vector3.left * moveSpeed;
     }
 }
