@@ -43,9 +43,14 @@ public class Player : MonoBehaviour
     private Vector2 inputVec;
 
     /// <summary>
+    /// 총알 발사 위치
+    /// </summary>
+    private Transform firePos;
+
+    /// <summary>
     /// 총알 발사 코루틴
     /// </summary>
-    IEnumerator fireCorou;
+    private IEnumerator fireCorou;
 
     // 컴포넌트
     Animator anim;
@@ -64,6 +69,9 @@ public class Player : MonoBehaviour
         // 이동속도 저장
         boostSpeed = moveSpeed * 2f;
         defaultSpeed = moveSpeed;
+
+        // 총알 발사 위치 저장
+        firePos = transform.GetChild(0);
     }
 
     private void Start()
@@ -139,7 +147,7 @@ public class Player : MonoBehaviour
         {
             if(elapsedTime > fireDelay)
             {
-                Factory.Inst.GetObject(PoolObjectType.PlayerBullet);
+                Factory.Inst.GetObject(PoolObjectType.PlayerBullet, firePos.position);
                 elapsedTime = 0;
             }
 
