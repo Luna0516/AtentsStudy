@@ -12,6 +12,16 @@ public class Player : MonoBehaviour
     public float moveSpeed;
 
     /// <summary>
+    /// 부스트 쓸때 이동 속도
+    /// </summary>
+    private float boostSpeed;
+
+    /// <summary>
+    /// 초기 이동 속도
+    /// </summary>
+    private float defaultSpeed;
+
+    /// <summary>
     /// 총알 발사 딜레이 시간
     /// </summary>
     [Header("총알 발사 속도")]
@@ -32,19 +42,33 @@ public class Player : MonoBehaviour
     /// </summary>
     private Vector2 inputVec;
 
+    /// <summary>
+    /// 총알 발사 코루틴
+    /// </summary>
+    IEnumerator fireCorou;
+
     // 컴포넌트
     Animator anim;
-    Rigidbody2D rigid;
 
     // 인풋 시스템
     PlayerInputActions inputActions;
 
     private void Awake()
     {
+        fireCorou = FireCoroutine();
+
         anim = GetComponent<Animator>();
-        rigid = GetComponent<Rigidbody2D>();
 
         inputActions = new PlayerInputActions();
+
+        // 이동속도 저장
+        boostSpeed = moveSpeed * 2f;
+        defaultSpeed = moveSpeed;
+    }
+
+    private void Start()
+    {
+        elapsedTime = fireDelay;
     }
 
     private void OnEnable()
@@ -52,10 +76,18 @@ public class Player : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Move.canceled += OnMove;
+        inputActions.Player.Fire.performed += StartFire;
+        inputActions.Player.Fire.canceled += StoptFire;
+        inputActions.Player.Boost.performed += OnBoost;
+        inputActions.Player.Boost.canceled += OnBoost;
     }
 
     private void OnDisable()
     {
+        inputActions.Player.Boost.canceled -= OnBoost;
+        inputActions.Player.Boost.performed -= OnBoost;
+        inputActions.Player.Fire.canceled -= StoptFire;
+        inputActions.Player.Fire.performed -= StartFire;
         inputActions.Player.Move.canceled -= OnMove;
         inputActions.Player.Move.performed -= OnMove;
         inputActions.Player.Disable();
@@ -82,4 +114,48 @@ public class Player : MonoBehaviour
         anim.SetFloat(Hash_InputY, inputVec.y);
     }
 
+    /// <summary>
+    /// 총알 발사 버튼을 누르면 실행할 함수
+    /// </summary>
+    private void StartFire(InputAction.CallbackContext context)
+    {
+        StartCoroutine(fireCorou);
+    }
+
+    /// <summary>
+    /// 총알 발사 버튼을 떼면 실행할 함수
+    /// </summary>
+    private void StoptFire(InputAction.CallbackContext context)
+    {
+        StopCoroutine(fireCorou);
+    }
+
+    /// <summary>
+    /// 총알 발사 코루틴
+    /// </summary>
+    IEnumerator FireCoroutine()
+    {
+        while (true)
+        {
+            if(elapsedTime > fireDelay)
+            {
+                Factory.Inst.GetObject(PoolObjectType.PlayerBullet);
+                elapsedTime = 0;
+            }
+
+            yield return null;
+        }
+    }
+
+    private void OnBoost(InputAction.CallbackContext context)
+    {
+        if(context.canceled)
+        {
+            moveSpeed = defaultSpeed;
+        }
+        else
+        {
+            moveSpeed = boostSpeed;
+        }
+    }
 }

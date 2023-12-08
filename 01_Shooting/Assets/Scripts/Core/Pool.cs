@@ -76,7 +76,7 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
         }
         else
         {
-            // ExpandPool(); 풀 확장 함수
+            ExpandPool();
             return GetObject(spawnTransform);
         }
     }
@@ -86,8 +86,6 @@ public class Pool<T> : MonoBehaviour where T : PoolObject
     /// </summary>
     private void ExpandPool()
     {
-        Debug.LogWarning($"{gameObject.name} 풀 사이즈 증가. {poolSize} -> {poolSize * 2}");
-
         int newSize = poolSize * 2;
         T[] newPool = new T[newSize];
 
