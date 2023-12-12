@@ -5,6 +5,11 @@ using UnityEngine;
 public class EnemyBase : PoolObject
 {
     /// <summary>
+    /// 위치 초기화용 상수
+    /// </summary>
+    protected const float Default_Pos = -10000.0f;
+
+    /// <summary>
     /// 이동 속도
     /// </summary>
     public float moveSpeed;
@@ -42,6 +47,8 @@ public class EnemyBase : PoolObject
     /// 죽으면 얻게 될 점수
     /// </summary>
     public int score;
+
+
 
     /// <summary>
     /// health가 0이하로 내려가면 실행할 델리게이트 (파라메터 : 점수)

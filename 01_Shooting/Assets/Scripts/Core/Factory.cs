@@ -10,6 +10,7 @@ public enum PoolObjectType
     ExplosionEffect,
     EnemyOrigin,
     EnemyWave,
+    EnemyCurve,
 }
 
 public class Factory : Singleton<Factory>
@@ -18,6 +19,8 @@ public class Factory : Singleton<Factory>
     PlayerBulletHitEffectPool playerBulletHitEffectPool;
     ExplosionEffectPool explosionEffectPool;
     EnemyOriginPool enemyOriginPool;
+    EnemyWavePool enemyWavePool;
+    EnemyCurvePool enemyCurvePool;
 
     protected override void OnInitialize()
     {
@@ -25,11 +28,15 @@ public class Factory : Singleton<Factory>
         playerBulletHitEffectPool = GetComponentInChildren<PlayerBulletHitEffectPool>();
         explosionEffectPool = GetComponentInChildren<ExplosionEffectPool>();
         enemyOriginPool = GetComponentInChildren<EnemyOriginPool>();
+        enemyWavePool = GetComponentInChildren<EnemyWavePool>();
+        enemyCurvePool = GetComponentInChildren<EnemyCurvePool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
         explosionEffectPool.Initialize();
         enemyOriginPool.Initialize();
+        enemyWavePool.Initialize();
+        enemyCurvePool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -50,6 +57,12 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.EnemyOrigin:
                 result = enemyOriginPool.GetObject(spawn).gameObject;
                 break;
+            case PoolObjectType.EnemyWave:
+                result = enemyWavePool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.EnemyCurve:
+                result = enemyCurvePool.GetObject(spawn).gameObject;
+                break;
             case PoolObjectType.None:
             default:
                 break;
@@ -61,6 +74,25 @@ public class Factory : Singleton<Factory>
     public GameObject GetObject(PoolObjectType type, Vector2 spawnPos)
     {
         GameObject result = GetObject(type);
+
+        switch (type)
+        {
+            case PoolObjectType.EnemyWave:
+                EnemyWave enemyWave = result.GetComponent<EnemyWave>();
+                enemyWave.SpawnY = spawnPos.y;
+                break;
+            case PoolObjectType.EnemyCurve:
+                EnemyCurve enemyCurve = result.GetComponent<EnemyCurve>();
+                enemyCurve.SpawnY = spawnPos.y;
+                break;
+            case PoolObjectType.None:
+            case PoolObjectType.PlayerBullet:
+            case PoolObjectType.PlayerBulletHitEffect:
+            case PoolObjectType.ExplosionEffect:
+            case PoolObjectType.EnemyOrigin:
+            default:
+                break;
+        }
 
         result.transform.position = spawnPos;
 

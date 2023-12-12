@@ -46,6 +46,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4979870965371373917, guid: cd57b291890dd52468704dcb0f6d2e82, type: 3}
   poolSize: 8
+--- !u!1 &3830129033138561176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7751322428237918903}
+  - component: {fileID: 3304405354938239146}
+  m_Layer: 0
+  m_Name: EnemyCurvePool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7751322428237918903
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830129033138561176}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4043436691666767260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3304405354938239146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830129033138561176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84d28d5cde669c948876964579f17797, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1759644076033316998, guid: ec794c26db814eb48b54df55250ec7d1, type: 3}
+  poolSize: 8
 --- !u!1 &4833471207717324884
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,6 +311,7 @@ Transform:
   - {fileID: 798180634746976166}
   - {fileID: 8454277166094846615}
   - {fileID: 2673186949164337115}
+  - {fileID: 7751322428237918903}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5346502461993834490

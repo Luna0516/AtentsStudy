@@ -24,19 +24,33 @@ public class EnemyWave : EnemyBase
     /// <summary>
     /// 생성 y위치값
     /// </summary>
-    private float spawnY;
+    private float spawnY = Default_Pos;
+
+    /// <summary>
+    /// 생성 위치 지정용
+    /// </summary>
+    public float SpawnY
+    {
+        set
+        {
+            if(spawnY == Default_Pos)
+            {
+                spawnY = value;
+            }
+        }
+    }
 
     /// <summary>
     /// 이동 벡터
     /// </summary>
     private Vector3 moveVec;
 
-    protected override void OnEnable()
+    protected override void OnDisable()
     {
-        base.OnEnable();
+        base.OnDisable();
 
-        // 생성시 y축 위치 저장
-        spawnY = transform.position.y;
+        // 생성 위치 초기화
+        spawnY = Default_Pos;
     }
 
     private void Update()
