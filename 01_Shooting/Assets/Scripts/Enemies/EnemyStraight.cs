@@ -44,6 +44,9 @@ public class EnemyStraight : EnemyBase
         speed = moveSpeed;
         target = GameManager.Inst.Player.transform;
 
+        // 회전값 초기화
+        transform.rotation = Quaternion.identity;
+
         StartCoroutine(RushCorou());
     }
 
@@ -59,7 +62,7 @@ public class EnemyStraight : EnemyBase
     {
         yield return new WaitForSeconds(stopTime);
 
-        speed = 0;
+        speed = Stop_Speed;
 
         yield return new WaitForSeconds(waitTime);
 
@@ -68,6 +71,9 @@ public class EnemyStraight : EnemyBase
         float elapsedTime = 0;
 
         Vector2 directionToTarget = (target.position - transform.position).normalized;
+
+        // 미리 값 구해놓기
+        float startAngle = transform.eulerAngles.z;
 
         // 각도 구하기 (-180이유 => 적들의 스프라이트가 위쪽을 향하고 있어서 그 값까지 -90 더해줘서 최종 -180)
         float targetAngle = Mathf.Atan2(directionToTarget.y, directionToTarget.x) * Mathf.Rad2Deg - 180;
@@ -79,7 +85,7 @@ public class EnemyStraight : EnemyBase
         {
             elapsedTime += Time.deltaTime;
 
-            float angle = Mathf.LerpAngle(transform.eulerAngles.z, targetAngle, elapsedTime * inverseRotSpeed);
+            float angle = Mathf.LerpAngle(startAngle, targetAngle, elapsedTime * inverseRotSpeed);
             transform.rotation = Quaternion.Euler(0, 0, angle);
 
             yield return null;

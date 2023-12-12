@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &9102819132627168791
+--- !u!1001 &9140594615846596008
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -50,12 +50,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2017447310202810499, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
       propertyPath: m_Name
-      value: EnemyStraight
+      value: EnemySpread
       objectReference: {fileID: 0}
     - target: {fileID: 3552537313247984546, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ff5e209302754c345a3cc97e324a9c2f, type: 3}
+      objectReference: {fileID: 21300000, guid: 2379b5674f7c02648a6cbcba75322a15, type: 3}
     - target: {fileID: 6607296441043384649, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -75,29 +75,28 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2017447310202810499, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2207401077004733514}
+      addedObject: {fileID: 8102657274385589024}
   m_SourcePrefab: {fileID: 100100000, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
---- !u!1 &7326473026406162068 stripped
+--- !u!1 &7288658165516131627 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2017447310202810499, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
-  m_PrefabInstance: {fileID: 9102819132627168791}
+  m_PrefabInstance: {fileID: 9140594615846596008}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2207401077004733514
+--- !u!114 &8102657274385589024
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7326473026406162068}
+  m_GameObject: {fileID: 7288658165516131627}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8c43641e2178324b854be6ff037d86f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0630c9e449cd8944cb49e7836957fd79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2.5
-  maxHealth: 5
-  score: 5
-  stopTime: 2
-  waitTime: 2
-  rushSpeed: 8
-  rotTime: 0.3
+  moveSpeed: 2
+  maxHealth: 15
+  score: 30
+  spreadBullet: {fileID: 418169467916816598, guid: 77df736b16b496f449629b3372b72ecc, type: 3}
+  fireDelay: 0.5
+  apperTime: 3

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyCurve : EnemyBase
 {
+    /// <summary>
+    /// 회전 속도
+    /// </summary>
     public float rotateSpeed;
 
     /// <summary>
@@ -21,6 +24,8 @@ public class EnemyCurve : EnemyBase
             if (spawnY == Default_Pos)
             {
                 spawnY = value;
+
+                // 스폰한 위치에 따라 회전할 방향(상하) 지정
                 if(spawnY > 0)
                 {
                     curveDir = 1;
@@ -42,6 +47,7 @@ public class EnemyCurve : EnemyBase
     {
         base.OnDisable();
 
+        // 생성 위치 초기화
         spawnY = Default_Pos;
     }
 

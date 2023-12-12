@@ -10,6 +10,11 @@ public class EnemyBase : PoolObject
     protected const float Default_Pos = -10000.0f;
 
     /// <summary>
+    /// 이동속도 0으로 만드는 상수
+    /// </summary>
+    protected const float Stop_Speed = 0.0f;
+
+    /// <summary>
     /// 이동 속도
     /// </summary>
     public float moveSpeed;

@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: 3552537313247984546, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 532765ff587a32643928cd30680881c0, type: 3}
+      objectReference: {fileID: 21300000, guid: 42a1218082a699645937b2fb95f1ca50, type: 3}
     - target: {fileID: 6607296441043384649, guid: 9da0f0257f69d564482841ac44d86815, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068

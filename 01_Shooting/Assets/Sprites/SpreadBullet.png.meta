@@ -1,7 +1,28 @@
 fileFormatVersion: 2
-guid: d66ea73d2b9d0a042817ebbe8a328b2a
+guid: a494223929d7969429f93a50dafac58f
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 874343242196921964
+    second: Player Bullet 1
+  - first:
+      213: -7976837497307082302
+    second: Player Bullet 1
+  - first:
+      213: -7803065417098437583
+    second: Follower Bullet
+  - first:
+      213: 7431529995326980795
+    second: Enemy Bullet 0
+  - first:
+      213: -7779215486825634471
+    second: Enemy Bullet 1
+  - first:
+      213: 830317617348258784
+    second: Enemy Bullet 2
+  - first:
+      213: 6112890488319390909
+    second: Enemy Bullet 3
   externalObjects: {}
   serializedVersion: 12
   mipmaps:
@@ -39,16 +60,16 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 24
+  spritePixelsToUnits: 36
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -63,7 +84,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 0
+  applyGammaDecoding: 1
   swizzle: 50462976
   cookieLightType: 1
   platformSettings:
@@ -134,7 +155,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: SpreadBullet
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 2
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2f8ee3afc0d1a048b9b62f2060d118a
+      internalID: 6112890488319390909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +187,14 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Enemy Bullet 0: 7431529995326980795
+      Enemy Bullet 1: -7779215486825634471
+      Enemy Bullet 2: 830317617348258784
+      Follower Bullet: -7803065417098437583
+      Player Bullet 0: -3853900315991760761
+      Player Bullet 1: 874343242196921964
+      SpreadBullet: 6112890488319390909
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

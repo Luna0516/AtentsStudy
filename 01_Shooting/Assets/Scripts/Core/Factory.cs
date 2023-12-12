@@ -12,6 +12,8 @@ public enum PoolObjectType
     EnemyWave,
     EnemyCurve,
     EnemyStraight,
+    EnemySpread,
+    SpreadBullet,
 }
 
 public class Factory : Singleton<Factory>
@@ -23,6 +25,8 @@ public class Factory : Singleton<Factory>
     EnemyWavePool enemyWavePool;
     EnemyCurvePool enemyCurvePool;
     EnemyStraightPool enemyStraightPool;
+    EnemySpreadPool enemySpreadPool;
+    SpreadBulletPool spreadBulletPool;
 
     protected override void OnInitialize()
     {
@@ -33,6 +37,8 @@ public class Factory : Singleton<Factory>
         enemyWavePool = GetComponentInChildren<EnemyWavePool>();
         enemyCurvePool = GetComponentInChildren<EnemyCurvePool>();
         enemyStraightPool = GetComponentInChildren<EnemyStraightPool>();
+        enemySpreadPool = GetComponentInChildren<EnemySpreadPool>();
+        spreadBulletPool = GetComponentInChildren<SpreadBulletPool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
@@ -41,6 +47,8 @@ public class Factory : Singleton<Factory>
         enemyWavePool.Initialize();
         enemyCurvePool.Initialize();
         enemyStraightPool.Initialize();
+        enemySpreadPool.Initialize();
+        spreadBulletPool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -70,6 +78,12 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.EnemyStraight:
                 result = enemyStraightPool.GetObject(spawn).gameObject;
                 break;
+            case PoolObjectType.EnemySpread:
+                result = enemySpreadPool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.SpreadBullet:
+                result = spreadBulletPool.GetObject(spawn).gameObject;
+                break;
             case PoolObjectType.None:
             default:
                 break;
@@ -98,6 +112,8 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.ExplosionEffect:
             case PoolObjectType.EnemyOrigin:
             case PoolObjectType.EnemyStraight:
+            case PoolObjectType.EnemySpread:
+            case PoolObjectType.SpreadBullet:
             default:
                 break;
         }
