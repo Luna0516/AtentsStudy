@@ -11,6 +11,7 @@ public enum PoolObjectType
     EnemyOrigin,
     EnemyWave,
     EnemyCurve,
+    EnemyStraight,
 }
 
 public class Factory : Singleton<Factory>
@@ -21,6 +22,7 @@ public class Factory : Singleton<Factory>
     EnemyOriginPool enemyOriginPool;
     EnemyWavePool enemyWavePool;
     EnemyCurvePool enemyCurvePool;
+    EnemyStraightPool enemyStraightPool;
 
     protected override void OnInitialize()
     {
@@ -30,6 +32,7 @@ public class Factory : Singleton<Factory>
         enemyOriginPool = GetComponentInChildren<EnemyOriginPool>();
         enemyWavePool = GetComponentInChildren<EnemyWavePool>();
         enemyCurvePool = GetComponentInChildren<EnemyCurvePool>();
+        enemyStraightPool = GetComponentInChildren<EnemyStraightPool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
@@ -37,6 +40,7 @@ public class Factory : Singleton<Factory>
         enemyOriginPool.Initialize();
         enemyWavePool.Initialize();
         enemyCurvePool.Initialize();
+        enemyStraightPool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -62,6 +66,9 @@ public class Factory : Singleton<Factory>
                 break;
             case PoolObjectType.EnemyCurve:
                 result = enemyCurvePool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.EnemyStraight:
+                result = enemyStraightPool.GetObject(spawn).gameObject;
                 break;
             case PoolObjectType.None:
             default:
@@ -90,6 +97,7 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.PlayerBulletHitEffect:
             case PoolObjectType.ExplosionEffect:
             case PoolObjectType.EnemyOrigin:
+            case PoolObjectType.EnemyStraight:
             default:
                 break;
         }

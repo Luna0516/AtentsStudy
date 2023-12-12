@@ -21,4 +21,9 @@ public class TestSpawn : TestBase
     {
         Factory.Inst.GetObject(PoolObjectType.EnemyCurve, transform.position);
     }
+
+    protected override void Test4(InputAction.CallbackContext context)
+    {
+        Factory.Inst.GetObject(PoolObjectType.EnemyStraight, transform.position);
+    }
 }
