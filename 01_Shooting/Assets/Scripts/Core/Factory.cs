@@ -9,6 +9,7 @@ public enum PoolObjectType
     PlayerBulletHitEffect,
     ExplosionEffect,
     EnemyOrigin,
+    EnemyWave,
 }
 
 public class Factory : Singleton<Factory>
