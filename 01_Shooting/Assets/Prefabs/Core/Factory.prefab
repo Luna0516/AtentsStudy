@@ -46,6 +46,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7326473026406162068, guid: 5398d205ed6e4974c991aa183c93a5e7, type: 3}
   poolSize: 8
+--- !u!1 &1742522631759664097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 383742359621464449}
+  - component: {fileID: 8915669515870622882}
+  m_Layer: 0
+  m_Name: ShooterBulletPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &383742359621464449
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742522631759664097}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4043436691666767260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8915669515870622882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1742522631759664097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e9175295a6f0b7458ed089ba7943ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 5484432294647561903, guid: d0ea6256d9526cb43b56c26d20e8f581, type: 3}
+  poolSize: 8
 --- !u!1 &2392598296749698330
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +322,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1359518835726286698, guid: 39bf301defe8c124d9c05cf67e1d6b5d, type: 3}
   poolSize: 16
+--- !u!1 &6672245003104186427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6426309491465553417}
+  - component: {fileID: 3395081625719642800}
+  m_Layer: 0
+  m_Name: EnemyShooterPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6426309491465553417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672245003104186427}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4043436691666767260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3395081625719642800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6672245003104186427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444d1019f41da3c41b1b721028a8bf3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 7236087090121565031, guid: a46dd76178e75524e98b180e6675e4ce, type: 3}
+  poolSize: 4
 --- !u!1 &6731365654392026020
 GameObject:
   m_ObjectHideFlags: 0
@@ -320,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8be254bea29f1d1469882536a477d19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 418169467916816598, guid: 77df736b16b496f449629b3372b72ecc, type: 3}
+  prefab: {fileID: 7780180241840981017, guid: e92391288c77df7418fc48f551ce449e, type: 3}
   poolSize: 128
 --- !u!1 &6867204150648252329
 GameObject:
@@ -452,7 +544,9 @@ Transform:
   - {fileID: 7751322428237918903}
   - {fileID: 1510339684993043489}
   - {fileID: 6721917546382650413}
+  - {fileID: 6426309491465553417}
   - {fileID: 5998696798596188255}
+  - {fileID: 383742359621464449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5346502461993834490

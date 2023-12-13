@@ -13,7 +13,9 @@ public enum PoolObjectType
     EnemyCurve,
     EnemyStraight,
     EnemySpread,
+    Enemyshooter,
     SpreadBullet,
+    ShooterBullet,
 }
 
 public class Factory : Singleton<Factory>
@@ -26,7 +28,9 @@ public class Factory : Singleton<Factory>
     EnemyCurvePool enemyCurvePool;
     EnemyStraightPool enemyStraightPool;
     EnemySpreadPool enemySpreadPool;
+    EnemyShooterPool enemyShooterPool;
     SpreadBulletPool spreadBulletPool;
+    ShooterBulletPool shooterBulletPool;
 
     protected override void OnInitialize()
     {
@@ -39,6 +43,8 @@ public class Factory : Singleton<Factory>
         enemyStraightPool = GetComponentInChildren<EnemyStraightPool>();
         enemySpreadPool = GetComponentInChildren<EnemySpreadPool>();
         spreadBulletPool = GetComponentInChildren<SpreadBulletPool>();
+        shooterBulletPool = GetComponentInChildren<ShooterBulletPool>();
+        enemyShooterPool = GetComponentInChildren<EnemyShooterPool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
@@ -49,6 +55,8 @@ public class Factory : Singleton<Factory>
         enemyStraightPool.Initialize();
         enemySpreadPool.Initialize();
         spreadBulletPool.Initialize();
+        shooterBulletPool.Initialize();
+        enemyShooterPool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -81,8 +89,14 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.EnemySpread:
                 result = enemySpreadPool.GetObject(spawn).gameObject;
                 break;
+            case PoolObjectType.Enemyshooter:
+                result = enemyShooterPool.GetObject(spawn).gameObject;
+                break;
             case PoolObjectType.SpreadBullet:
                 result = spreadBulletPool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.ShooterBullet:
+                result = shooterBulletPool.GetObject(spawn).gameObject;
                 break;
             case PoolObjectType.None:
             default:
@@ -113,7 +127,9 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.EnemyOrigin:
             case PoolObjectType.EnemyStraight:
             case PoolObjectType.EnemySpread:
+            case PoolObjectType.Enemyshooter:
             case PoolObjectType.SpreadBullet:
+            case PoolObjectType.ShooterBullet:
             default:
                 break;
         }

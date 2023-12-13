@@ -283,6 +283,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner
       objectReference: {fileID: 0}
+    - target: {fileID: 2284941333898328282, guid: d2de9ea4587848945982709106792797, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2660444364670950529, guid: d2de9ea4587848945982709106792797, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -322,6 +326,22 @@ PrefabInstance:
     - target: {fileID: 2660444364670950529, guid: d2de9ea4587848945982709106792797, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354789284070427346, guid: d2de9ea4587848945982709106792797, type: 3}
+      propertyPath: spawnDatas.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354789284070427346, guid: d2de9ea4587848945982709106792797, type: 3}
+      propertyPath: spawnDatas.Array.data[4].type
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354789284070427346, guid: d2de9ea4587848945982709106792797, type: 3}
+      propertyPath: spawnDatas.Array.data[5].type
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7354789284070427346, guid: d2de9ea4587848945982709106792797, type: 3}
+      propertyPath: spawnDatas.Array.data[5].interval
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
