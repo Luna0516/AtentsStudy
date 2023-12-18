@@ -26,4 +26,14 @@ public class TestSpawn : TestBase
     {
         Factory.Inst.GetObject(PoolObjectType.EnemyStraight, transform.position);
     }
+
+    protected override void Test5(InputAction.CallbackContext context)
+    {
+        Factory.Inst.GetObject(PoolObjectType.Enemyshooter, transform.position);
+    }
+
+    protected override void Test6(InputAction.CallbackContext context)
+    {
+        Factory.Inst.GetEnemyBullet(EnemyBulletType.Missile, transform.position, 6);
+    }
 }

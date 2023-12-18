@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyBulletPool : Pool<EnemyBullet>
+public class EnemyBulletBasePool : Pool<EnemyBulletBase>
 {
     
 }

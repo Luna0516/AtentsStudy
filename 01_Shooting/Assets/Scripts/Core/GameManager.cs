@@ -17,7 +17,7 @@ public class GameManager : Singleton<GameManager>
         get
         {
             // 없으면 현재 씬에서 찾아서 반환
-            if (!player)
+            if (player == null)
             {
                 player = FindObjectOfType<Player>();
             }

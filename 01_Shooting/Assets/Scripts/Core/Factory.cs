@@ -14,7 +14,17 @@ public enum PoolObjectType
     EnemyStraight,
     EnemySpread,
     Enemyshooter,
-    EnemyBullet,
+    EnemyBoss,
+    EnemyBulletBase,
+    EnemyShooterBullet,
+    EnemyMissileBullet,
+}
+
+public enum EnemyBulletType
+{
+    Base,
+    Shooter,
+    Missile
 }
 
 public class Factory : Singleton<Factory>
@@ -28,7 +38,10 @@ public class Factory : Singleton<Factory>
     EnemyStraightPool enemyStraightPool;
     EnemySpreadPool enemySpreadPool;
     EnemyShooterPool enemyShooterPool;
-    EnemyBulletPool enemyBulletPool;
+    EnemyBossPool enemyBossPool;
+    EnemyBulletBasePool enemyBulletBasePool;
+    EnemyShooterBulletPool enemyShooterBulletPool;
+    EnemyMissileBulletPool enemyMissileBulletPool;
 
     protected override void OnInitialize()
     {
@@ -41,7 +54,10 @@ public class Factory : Singleton<Factory>
         enemyStraightPool = GetComponentInChildren<EnemyStraightPool>();
         enemySpreadPool = GetComponentInChildren<EnemySpreadPool>();
         enemyShooterPool = GetComponentInChildren<EnemyShooterPool>();
-        enemyBulletPool = GetComponentInChildren<EnemyBulletPool>();
+        enemyBossPool = GetComponentInChildren<EnemyBossPool>();
+        enemyBulletBasePool = GetComponentInChildren<EnemyBulletBasePool>();
+        enemyShooterBulletPool = GetComponentInChildren<EnemyShooterBulletPool>();
+        enemyMissileBulletPool = GetComponentInChildren<EnemyMissileBulletPool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
@@ -52,7 +68,10 @@ public class Factory : Singleton<Factory>
         enemyStraightPool.Initialize();
         enemySpreadPool.Initialize();
         enemyShooterPool.Initialize();
-        enemyBulletPool.Initialize();
+        enemyBossPool.Initialize();
+        enemyBulletBasePool.Initialize();
+        enemyShooterBulletPool.Initialize();
+        enemyMissileBulletPool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -88,8 +107,17 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.Enemyshooter:
                 result = enemyShooterPool.GetObject(spawn).gameObject;
                 break;
-            case PoolObjectType.EnemyBullet:
-                result = enemyBulletPool.GetObject(spawn).gameObject;
+            case PoolObjectType.EnemyBoss:
+                result = enemyBossPool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.EnemyBulletBase:
+                result = enemyBulletBasePool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.EnemyShooterBullet:
+                result = enemyShooterBulletPool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.EnemyMissileBullet:
+                result = enemyMissileBulletPool.GetObject(spawn).gameObject;
                 break;
             case PoolObjectType.None:
             default:
@@ -122,11 +150,23 @@ public class Factory : Singleton<Factory>
 
     public GameObject GetEnemyBullet(EnemyBulletType type, Vector2 spawnPos, float bulletSpeed)
     {
-        GameObject result = GetObject(PoolObjectType.EnemyBullet);
+        GameObject result = null;
+        
+        switch (type)
+        {
+            case EnemyBulletType.Shooter:
+                result = GetObject(PoolObjectType.EnemyShooterBullet);
+                break;
+            case EnemyBulletType.Missile:
+                result = GetObject(PoolObjectType.EnemyMissileBullet);
+                break;
+            case EnemyBulletType.Base:
+            default:
+                result = GetObject(PoolObjectType.EnemyBulletBase);
+                break;
+        }
 
-        EnemyBullet enemyBullet = result.GetComponent<EnemyBullet>();
-
-        enemyBullet.BulletType = type;
+        EnemyBulletBase enemyBullet = result.GetComponent<EnemyBulletBase>();
 
         enemyBullet.MoveSpeed = bulletSpeed;
 

@@ -22,10 +22,20 @@ public class EnemyBoss : EnemyBase
     public float fireDelay = 1.0f;
 
     /// <summary>
+    /// 총알 이동 속도
+    /// </summary>
+    private float bulletSpeed = 3.0f;
+
+    /// <summary>
     /// 미사일 발사 속도
     /// </summary>
     [Header("미사일 발사 속도")]
     public float fireMissileDelay = 4.0f;
+
+    /// <summary>
+    /// 미사일 이동 속도
+    /// </summary>
+    private float missileSpeed = 4.0f;
 
     /// <summary>
     /// 연산에 사용할 속도 변수
@@ -67,6 +77,11 @@ public class EnemyBoss : EnemyBase
     /// </summary>
     private Transform fireMissilePos2;
 
+    /// <summary>
+    /// 플레이어 transform
+    /// </summary>
+    private Transform target;
+
     private void Awake()
     {
         // 총알 및 미사일 발사 위치 설정
@@ -75,24 +90,26 @@ public class EnemyBoss : EnemyBase
         child = transform.GetChild(2);
         fireMissilePos1 = child.transform;
         child = transform.GetChild(3);
-        fireMissilePos1 = child.transform;
+        fireMissilePos2 = child.transform;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
 
+        // 생성시 초기화 (준비상태, 이동속도)
         isReady = false;
         speed = 0.0f;
 
+        // 등장 프로세스 코루틴
         StartCoroutine(AppearProcess());
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (!isReady) { return; }
 
-        transform.position += Time.fixedDeltaTime * moveDir * speed;
+        transform.position += Time.deltaTime * moveDir * speed;
 
         if (transform.position.y > areaMax.y)
         {
@@ -133,7 +150,14 @@ public class EnemyBoss : EnemyBase
     /// </summary>
     private void FireBullet()
     {
-        Debug.Log("총알 발사!");
+        // 총알 발사 방향 지정 및 방향벡터로 바꾸기
+        Vector3 fireDir = target.position - firePos.position;
+        fireDir.Normalize();
+
+        GameObject bullet = Factory.Inst.GetEnemyBullet(EnemyBulletType.Base, firePos.position, bulletSpeed);
+
+        // up벡터 바꿔주기
+        bullet.transform.up = fireDir;
     }
 
     /// <summary>
@@ -141,8 +165,9 @@ public class EnemyBoss : EnemyBase
     /// </summary>
     private void FireMissile()
     {
-        Debug.Log("미사일 발사!");
-        Debug.Log("미사일 발사!");
+        // 미사일 발사!
+        Factory.Inst.GetEnemyBullet(EnemyBulletType.Missile, fireMissilePos1.position, missileSpeed);
+        Factory.Inst.GetEnemyBullet(EnemyBulletType.Missile, fireMissilePos2.position, missileSpeed);
     }
 
     /// <summary>
@@ -173,7 +198,9 @@ public class EnemyBoss : EnemyBase
         areaMax = transform.position + new Vector3(1, 1.5f, 0);
         areaMin = transform.position + new Vector3(-1, -1.5f, 0);
 
+        // 이동속도 및 target 설정
         speed = moveSpeed;
+        target = GameManager.Inst.Player.transform;
 
         // 목적지 설정
         SetNextDestination();
@@ -205,5 +232,50 @@ public class EnemyBoss : EnemyBase
             FireMissile();
             yield return new WaitForSeconds(fireMissileDelay);
         }
+    }
+
+    /// <summary>
+    /// 죽었을 때 실행할 함수
+    /// </summary>
+    protected override void Die()
+    {
+        // 죽었을 때 움직임과 행동 정지
+        StopAllCoroutines();
+        speed = 0.0f;
+
+        StartCoroutine(DieEffect());
+
+        onDie?.Invoke(score);
+    }
+
+    /// <summary>
+    /// 죽었을때 일정 시간 간격으로 터지는 이펙트 생성
+    /// </summary>
+    private IEnumerator DieEffect()
+    {
+        float elapsedTime = 0.0f;
+
+        int count = 20;
+
+        while (count > 0)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if(elapsedTime > 0.05f)
+            {
+                Vector3 randPos = new Vector3(Random.Range(-2.0f, 2.0f), Random.Range(-2.0f, 2.0f), 0);
+
+                // 터지는 이펙트 생성
+                GameObject explosion = Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position + randPos);
+                explosion.transform.localScale *= 2.5f;
+
+                count--;
+                elapsedTime = 0.0f;
+            }
+
+            yield return null;
+        }
+
+        gameObject.SetActive(false);
     }
 }

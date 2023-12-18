@@ -22,4 +22,11 @@ public class ExplosionEffect : PoolObject
         explosionEffectTime = anim.GetCurrentAnimatorStateInfo(0).length;
         StartCoroutine(LifeTime(explosionEffectTime));
     }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        transform.localScale = Vector3.one;
+    }
 }
