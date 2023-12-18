@@ -14,8 +14,7 @@ public enum PoolObjectType
     EnemyStraight,
     EnemySpread,
     Enemyshooter,
-    SpreadBullet,
-    ShooterBullet,
+    EnemyBullet,
 }
 
 public class Factory : Singleton<Factory>
@@ -29,8 +28,7 @@ public class Factory : Singleton<Factory>
     EnemyStraightPool enemyStraightPool;
     EnemySpreadPool enemySpreadPool;
     EnemyShooterPool enemyShooterPool;
-    SpreadBulletPool spreadBulletPool;
-    ShooterBulletPool shooterBulletPool;
+    EnemyBulletPool enemyBulletPool;
 
     protected override void OnInitialize()
     {
@@ -42,9 +40,8 @@ public class Factory : Singleton<Factory>
         enemyCurvePool = GetComponentInChildren<EnemyCurvePool>();
         enemyStraightPool = GetComponentInChildren<EnemyStraightPool>();
         enemySpreadPool = GetComponentInChildren<EnemySpreadPool>();
-        spreadBulletPool = GetComponentInChildren<SpreadBulletPool>();
-        shooterBulletPool = GetComponentInChildren<ShooterBulletPool>();
         enemyShooterPool = GetComponentInChildren<EnemyShooterPool>();
+        enemyBulletPool = GetComponentInChildren<EnemyBulletPool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
@@ -54,9 +51,8 @@ public class Factory : Singleton<Factory>
         enemyCurvePool.Initialize();
         enemyStraightPool.Initialize();
         enemySpreadPool.Initialize();
-        spreadBulletPool.Initialize();
-        shooterBulletPool.Initialize();
         enemyShooterPool.Initialize();
+        enemyBulletPool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -92,11 +88,8 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.Enemyshooter:
                 result = enemyShooterPool.GetObject(spawn).gameObject;
                 break;
-            case PoolObjectType.SpreadBullet:
-                result = spreadBulletPool.GetObject(spawn).gameObject;
-                break;
-            case PoolObjectType.ShooterBullet:
-                result = shooterBulletPool.GetObject(spawn).gameObject;
+            case PoolObjectType.EnemyBullet:
+                result = enemyBulletPool.GetObject(spawn).gameObject;
                 break;
             case PoolObjectType.None:
             default:
@@ -120,19 +113,22 @@ public class Factory : Singleton<Factory>
                 EnemyCurve enemyCurve = result.GetComponent<EnemyCurve>();
                 enemyCurve.SpawnY = spawnPos.y;
                 break;
-            case PoolObjectType.None:
-            case PoolObjectType.PlayerBullet:
-            case PoolObjectType.PlayerBulletHitEffect:
-            case PoolObjectType.ExplosionEffect:
-            case PoolObjectType.EnemyOrigin:
-            case PoolObjectType.EnemyStraight:
-            case PoolObjectType.EnemySpread:
-            case PoolObjectType.Enemyshooter:
-            case PoolObjectType.SpreadBullet:
-            case PoolObjectType.ShooterBullet:
-            default:
-                break;
         }
+
+        result.transform.position = spawnPos;
+
+        return result;
+    }
+
+    public GameObject GetEnemyBullet(EnemyBulletType type, Vector2 spawnPos, float bulletSpeed)
+    {
+        GameObject result = GetObject(PoolObjectType.EnemyBullet);
+
+        EnemyBullet enemyBullet = result.GetComponent<EnemyBullet>();
+
+        enemyBullet.BulletType = type;
+
+        enemyBullet.MoveSpeed = bulletSpeed;
 
         result.transform.position = spawnPos;
 

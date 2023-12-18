@@ -21,6 +21,11 @@ public class EnemyShooter : EnemyBase
     public float fireDelay;
 
     /// <summary>
+    /// 총알 속도
+    /// </summary>
+    public float bulletSpeed = 7.0f;
+
+    /// <summary>
     /// 시간 확인용 변수
     /// </summary>
     private float elapsedTime;
@@ -73,11 +78,11 @@ public class EnemyShooter : EnemyBase
 
         Vector2 firPos = (Vector2)transform.position + Vector2.left * 0.5f;
         GameObject bullet;
-        bullet = Factory.Inst.GetObject(PoolObjectType.ShooterBullet, firPos + (Vector2.left * 0.5f));
+        bullet = Factory.Inst.GetEnemyBullet(EnemyBulletType.Shooter, firPos + (Vector2.left * 0.5f), bulletSpeed);
         bullet.transform.up = -transform.right;
-        bullet = Factory.Inst.GetObject(PoolObjectType.ShooterBullet, firPos + Vector2.up * Random.Range(0.1f, 0.5f));
+        bullet = Factory.Inst.GetEnemyBullet(EnemyBulletType.Shooter, firPos + Vector2.up * Random.Range(0.1f, 0.5f), bulletSpeed);
         bullet.transform.up = -transform.right;
-        bullet = Factory.Inst.GetObject(PoolObjectType.ShooterBullet, firPos + Vector2.up * Random.Range(-0.1f, -0.5f));
+        bullet = Factory.Inst.GetEnemyBullet(EnemyBulletType.Shooter, firPos + Vector2.up * Random.Range(-0.1f, -0.5f), bulletSpeed);
         bullet.transform.up = -transform.right;
 
         yield return new WaitForSeconds(1.0f);

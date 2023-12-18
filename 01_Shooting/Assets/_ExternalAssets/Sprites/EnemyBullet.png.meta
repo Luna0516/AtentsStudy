@@ -157,7 +157,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpreadBullet
+      name: EnemyBullet
       rect:
         serializedVersion: 2
         x: 66
@@ -191,10 +191,10 @@ TextureImporter:
       Enemy Bullet 0: 7431529995326980795
       Enemy Bullet 1: -7779215486825634471
       Enemy Bullet 2: 830317617348258784
+      EnemyBullet: 6112890488319390909
       Follower Bullet: -7803065417098437583
       Player Bullet 0: -3853900315991760761
       Player Bullet 1: 874343242196921964
-      SpreadBullet: 6112890488319390909
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

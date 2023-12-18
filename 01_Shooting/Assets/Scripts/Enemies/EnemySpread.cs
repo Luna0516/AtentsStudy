@@ -20,6 +20,11 @@ public class EnemySpread : EnemyBase
     public float fireDelay;
 
     /// <summary>
+    /// 총알 속도
+    /// </summary>
+    public float bulletSpeed = 1.5f;
+
+    /// <summary>
     /// 멈춰서 총알 발사하기 전까지의 시간
     /// </summary>
     public float apperTime;
@@ -108,8 +113,7 @@ public class EnemySpread : EnemyBase
         {
             foreach(Vector2 firePos in firVec1)
             {
-                GameObject bullet = Factory.Inst.GetObject(PoolObjectType.SpreadBullet);
-                bullet.transform.position = myPos + firePos;
+                GameObject bullet = Factory.Inst.GetEnemyBullet(EnemyBulletType.Base, (myPos + firePos), bulletSpeed);
                 bullet.transform.up = firePos;
             }
         }
@@ -117,8 +121,7 @@ public class EnemySpread : EnemyBase
         {
             foreach (Vector2 firePos in firVec2)
             {
-                GameObject bullet = Factory.Inst.GetObject(PoolObjectType.SpreadBullet);
-                bullet.transform.position = myPos + firePos;
+                GameObject bullet = Factory.Inst.GetEnemyBullet(EnemyBulletType.Base, (myPos + firePos), bulletSpeed);
                 bullet.transform.up = firePos;
             }
         }
