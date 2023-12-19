@@ -62,10 +62,25 @@ public class EnemyMissileBullet : EnemyBulletBase
     private void OnEnable()
     {
         Health = maxHealth;
-
-        target = GameManager.Inst.Player.transform;
+        
+        if (GameManager.Inst != null)
+        {
+            target = GameManager.Inst.Player.transform;
+            onDie += GameManager.Inst.AddScore;
+        }
 
         StartCoroutine(ChaseTarget());
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        if(GameManager.Inst != null)
+        {
+            target = null;
+            onDie -= GameManager.Inst.AddScore;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

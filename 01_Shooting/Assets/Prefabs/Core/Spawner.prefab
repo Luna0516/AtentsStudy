@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2660444364670950529
 Transform:
   m_ObjectHideFlags: 0
@@ -57,3 +57,5 @@ MonoBehaviour:
     interval: 4
   - type: 8
     interval: 25
+  - type: 9
+    interval: 20

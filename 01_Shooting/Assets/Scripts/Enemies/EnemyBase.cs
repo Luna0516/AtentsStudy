@@ -61,6 +61,21 @@ public class EnemyBase : PoolObject
     protected virtual void OnEnable()
     {
         Health = maxHealth;
+
+        if (GameManager.Inst)
+        {
+            onDie += GameManager.Inst.AddScore;
+        }
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        if (GameManager.Inst)
+        {
+            onDie -= GameManager.Inst.AddScore;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

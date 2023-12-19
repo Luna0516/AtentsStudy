@@ -6,6 +6,55 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     /// <summary>
+    /// 플레이어의 목숨
+    /// </summary>
+    private int life = 3;
+
+    /// <summary>
+    /// 플레이어의 목숨에 변화 설정을 위한 프로퍼티
+    /// </summary>
+    private int Life
+    {
+        get => life;
+        set
+        {
+            // 목숨이 변경하는 값과 다르면
+            if (life != value && value > -1)
+            {
+                life = value;
+
+                onLifeCountChange?.Invoke(life);
+
+                if(life > 0)
+                {
+                    // 무적 시간 코루틴 실행
+                    StartCoroutine(InvisibleCoroutine());
+                }
+                else
+                {
+                    // 목숨이 0 이하면 죽는 함수 실행
+                    Die();
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 무적 시간
+    /// </summary>
+    public float invincibilityDuration = 2f;
+
+    /// <summary>
+    /// 깜박임 시간
+    /// </summary>
+    public float blinkInterval = 0.1f;
+
+    /// <summary>
+    /// 깜박임 시간 코루틴용
+    /// </summary>
+    private WaitForSeconds blinkTimer;
+
+    /// <summary>
     /// 이동 속도
     /// </summary>
     [Header("이동 속도")]
@@ -38,9 +87,24 @@ public class Player : MonoBehaviour
     readonly int Hash_InputY = Animator.StringToHash("InputY");
 
     /// <summary>
+    /// 플레이어의 목숨이 변할 때마다 보낼 델리게이트 신호
+    /// </summary>
+    public System.Action<int> onLifeCountChange;
+
+    /// <summary>
+    /// 플레이어가 죽으면 보낼 델리게이트 신호
+    /// </summary>
+    public System.Action onDie;
+
+    /// <summary>
     /// 방향키로 입력받은 벡터값
     /// </summary>
     private Vector2 inputVec;
+
+    /// <summary>
+    /// 총알 발사 코루틴
+    /// </summary>
+    private IEnumerator fireCorou;
 
     /// <summary>
     /// 총알 발사 위치
@@ -48,12 +112,19 @@ public class Player : MonoBehaviour
     private Transform firePos;
 
     /// <summary>
-    /// 총알 발사 코루틴
+    /// 총알 발사 이펙트
     /// </summary>
-    private IEnumerator fireCorou;
+    private GameObject fireEffect;
+
+    /// <summary>
+    /// 총알 발사 이펙트 보이는 시간
+    /// </summary>
+    private WaitForSeconds fireEffectWait = new WaitForSeconds(0.01f);
 
     // 컴포넌트
     Animator anim;
+    Collider2D coll;
+    SpriteRenderer spriteRenderer;
 
     // 인풋 시스템
     PlayerInputActions inputActions;
@@ -63,6 +134,8 @@ public class Player : MonoBehaviour
         fireCorou = FireCoroutine();
 
         anim = GetComponent<Animator>();
+        coll = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
 
         inputActions = new PlayerInputActions();
 
@@ -70,8 +143,12 @@ public class Player : MonoBehaviour
         boostSpeed = moveSpeed * 2f;
         defaultSpeed = moveSpeed;
 
-        // 총알 발사 위치 저장
+        // 코루틴용 대기 시간 저장
+        blinkTimer = new WaitForSeconds(blinkInterval);
+
+        // 총알 발사 및 이펙트 저장
         firePos = transform.GetChild(0);
+        fireEffect = transform.GetChild(1).gameObject;
     }
 
     private void Start()
@@ -99,6 +176,9 @@ public class Player : MonoBehaviour
         inputActions.Player.Move.canceled -= OnMove;
         inputActions.Player.Move.performed -= OnMove;
         inputActions.Player.Disable();
+
+        // 델리게이트 연결 해제
+        onLifeCountChange = null;
     }
 
     private void Update()
@@ -109,6 +189,73 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         transform.Translate(Time.fixedDeltaTime * inputVec * moveSpeed);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // 충돌한 게임오브젝트의 태그가 Enemy or EnemyBullet이면 목숨 감소;
+        if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            Life--;
+        }
+    }
+
+    /// <summary>
+    /// 플레이어가 죽으면 실행될 함수
+    /// </summary>
+    private void Die()
+    {
+
+    }
+
+    /// <summary>
+    /// 총알 발사 코루틴
+    /// </summary>
+    private IEnumerator FireCoroutine()
+    {
+        while (true)
+        {
+            if(elapsedTime > fireDelay)
+            {
+                StartCoroutine(FireEffect());
+                Factory.Inst.GetObject(PoolObjectType.PlayerBullet, firePos.position);
+                elapsedTime = 0;
+            }
+
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// 총알 발사 이펙트 코루틴
+    /// </summary>
+    private IEnumerator FireEffect()
+    {
+        fireEffect.SetActive(true);
+        yield return fireEffectWait;
+        fireEffect.SetActive(false);
+    }
+
+    /// <summary>
+    /// 무적 상태 로직용 코루틴 (깜박임 / 충돌 안됨)
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator InvisibleCoroutine()
+    {
+        coll.enabled = false;
+
+        float elapsedTime = 0;
+
+        while (elapsedTime < invincibilityDuration)
+        {
+            spriteRenderer.enabled = !spriteRenderer.enabled;
+
+            yield return blinkTimer;
+            elapsedTime += blinkInterval;
+        }
+
+        coll.enabled = true;
+        spriteRenderer.enabled = true;
     }
 
     /// <summary>
@@ -139,24 +286,11 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// 총알 발사 코루틴
+    /// 부스트 버튼의 상호작용에 따른 이동속도 변화 함수
     /// </summary>
-    IEnumerator FireCoroutine()
-    {
-        while (true)
-        {
-            if(elapsedTime > fireDelay)
-            {
-                Factory.Inst.GetObject(PoolObjectType.PlayerBullet, firePos.position);
-                elapsedTime = 0;
-            }
-
-            yield return null;
-        }
-    }
-
     private void OnBoost(InputAction.CallbackContext context)
     {
+        // 부스트 버튼을 누를 때 속도 상승 떼면 속도 원래대로
         if(context.canceled)
         {
             moveSpeed = defaultSpeed;
