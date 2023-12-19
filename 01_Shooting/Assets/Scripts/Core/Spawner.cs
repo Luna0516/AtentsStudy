@@ -62,21 +62,24 @@ public class Spawner : MonoBehaviour
     /// <param name="type"></param>
     private void Spawn(PoolObjectType type)
     {
-        Vector2 spawnPos = new Vector2(spawnX, Random.Range(-halfHeight, halfHeight));
+        Vector3 spawnPos = new Vector3(spawnX, Random.Range(-halfHeight, halfHeight), 0);
 
         switch (type)
         {
             // 스프레드 적은 따로 3마리씩 소환
             case PoolObjectType.EnemySpread:
-                Factory.Inst.GetObject(type, new Vector2(spawnX - 2.5f, 0));
-                Factory.Inst.GetObject(type, new Vector2(spawnX, 2.5f));
-                Factory.Inst.GetObject(type, new Vector2(spawnX, -2.5f));
+                Factory.Inst.GetObject(type, new Vector3(spawnX - 2.5f, 0));
+                Factory.Inst.GetObject(type, new Vector3(spawnX, 2.5f));
+                Factory.Inst.GetObject(type, new Vector3(spawnX, -2.5f));
                 break;
             case PoolObjectType.EnemyOrigin:
             case PoolObjectType.EnemyWave:
             case PoolObjectType.EnemyCurve:
             case PoolObjectType.EnemyStraight:
                 Factory.Inst.GetObject(type, spawnPos);
+                break;
+            case PoolObjectType.EnemyAsteroid:
+                Factory.Inst.GetAsteroid(spawnPos);
                 break;
             default:
                 break;

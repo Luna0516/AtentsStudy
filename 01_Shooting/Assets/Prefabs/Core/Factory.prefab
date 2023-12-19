@@ -184,6 +184,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 4979870965371373917, guid: cd57b291890dd52468704dcb0f6d2e82, type: 3}
   poolSize: 8
+--- !u!1 &2764019310227665827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2820109526719260341}
+  - component: {fileID: 4597909393964879818}
+  m_Layer: 0
+  m_Name: EnemyAsteroidPool
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2820109526719260341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764019310227665827}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4043436691666767260}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4597909393964879818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2764019310227665827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f50feb7a6caa094eab495ff761f1ecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 4201298170148312467, guid: bf283d1a1a269ae4188485aaa7331beb, type: 3}
+  poolSize: 16
 --- !u!1 &3830129033138561176
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,6 +683,7 @@ Transform:
   - {fileID: 1510339684993043489}
   - {fileID: 6721917546382650413}
   - {fileID: 6426309491465553417}
+  - {fileID: 2820109526719260341}
   - {fileID: 2413781963151546265}
   - {fileID: 2917218672716645069}
   - {fileID: 5250973054821000223}

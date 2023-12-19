@@ -42,12 +42,12 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 무적 시간
     /// </summary>
-    public float invincibilityDuration = 2f;
+    private float invincibilityDuration = 2f;
 
     /// <summary>
     /// 깜박임 시간
     /// </summary>
-    public float blinkInterval = 0.1f;
+    private float blinkInterval = 0.1f;
 
     /// <summary>
     /// 깜박임 시간 코루틴용
@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
     /// 이동 속도
     /// </summary>
     [Header("이동 속도")]
-    public float moveSpeed;
+    public float moveSpeed = 3;
 
     /// <summary>
     /// 부스트 쓸때 이동 속도
@@ -73,8 +73,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 총알 발사 딜레이 시간
     /// </summary>
-    [Header("총알 발사 속도")]
-    public float fireDelay;
+    private float fireDelay = 0.2f;
 
     /// <summary>
     /// 총알 발사 딜레이 확인용 시간

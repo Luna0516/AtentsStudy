@@ -51,7 +51,7 @@ public class EnemyBase : PoolObject
     /// <summary>
     /// 죽으면 얻게 될 점수
     /// </summary>
-    public int score;
+    protected int score;
     
     /// <summary>
     /// health가 0이하로 내려가면 실행할 델리게이트 (파라메터 : 점수)
@@ -60,7 +60,13 @@ public class EnemyBase : PoolObject
 
     protected virtual void OnEnable()
     {
+        // 현재 체력을 최대 체력으로 설정
         Health = maxHealth;
+
+        // 점수 설정
+        {
+            score = (health * health) + 5;
+        }
 
         if (GameManager.Inst)
         {

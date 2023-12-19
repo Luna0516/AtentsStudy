@@ -40,16 +40,6 @@ public class EnemyMissileBullet : EnemyBulletBase
     public int maxHealth;
 
     /// <summary>
-    /// 죽으면 얻게 될 점수
-    /// </summary>
-    public int score;
-
-    /// <summary>
-    /// health가 0이하로 내려가면 실행할 델리게이트 (파라메터 : 점수)
-    /// </summary>
-    public System.Action<int> onDie;
-
-    /// <summary>
     /// 움직이는 방향
     /// </summary>
     Vector3 moveDir;
@@ -61,12 +51,12 @@ public class EnemyMissileBullet : EnemyBulletBase
 
     private void OnEnable()
     {
+        // 현재 체력을 최대 체력으로 설정
         Health = maxHealth;
-        
+
         if (GameManager.Inst != null)
         {
             target = GameManager.Inst.Player.transform;
-            onDie += GameManager.Inst.AddScore;
         }
 
         StartCoroutine(ChaseTarget());
@@ -79,7 +69,6 @@ public class EnemyMissileBullet : EnemyBulletBase
         if(GameManager.Inst != null)
         {
             target = null;
-            onDie -= GameManager.Inst.AddScore;
         }
     }
 
@@ -120,8 +109,6 @@ public class EnemyMissileBullet : EnemyBulletBase
     {
         // 터지는 이펙트 생성
         Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position);
-
-        onDie?.Invoke(score);
 
         gameObject.SetActive(false);
     }

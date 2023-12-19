@@ -36,4 +36,9 @@ public class TestSpawn : TestBase
     {
         Factory.Inst.GetEnemyBullet(EnemyBulletType.Missile, transform.position, 6);
     }
+
+    protected override void Test7(InputAction.CallbackContext context)
+    {
+        Factory.Inst.GetAsteroid(transform.position);
+    }
 }

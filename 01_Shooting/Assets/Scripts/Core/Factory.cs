@@ -14,6 +14,7 @@ public enum PoolObjectType
     EnemyStraight,
     EnemySpread,
     Enemyshooter,
+    EnemyAsteroid,
     EnemyBoss,
     EnemyBulletBase,
     EnemyShooterBullet,
@@ -38,6 +39,7 @@ public class Factory : Singleton<Factory>
     EnemyStraightPool enemyStraightPool;
     EnemySpreadPool enemySpreadPool;
     EnemyShooterPool enemyShooterPool;
+    EnemyAsteroidPool enemyAsteroidPool;
     EnemyBossPool enemyBossPool;
     EnemyBulletBasePool enemyBulletBasePool;
     EnemyShooterBulletPool enemyShooterBulletPool;
@@ -54,6 +56,7 @@ public class Factory : Singleton<Factory>
         enemyStraightPool = GetComponentInChildren<EnemyStraightPool>();
         enemySpreadPool = GetComponentInChildren<EnemySpreadPool>();
         enemyShooterPool = GetComponentInChildren<EnemyShooterPool>();
+        enemyAsteroidPool = GetComponentInChildren<EnemyAsteroidPool>();
         enemyBossPool = GetComponentInChildren<EnemyBossPool>();
         enemyBulletBasePool = GetComponentInChildren<EnemyBulletBasePool>();
         enemyShooterBulletPool = GetComponentInChildren<EnemyShooterBulletPool>();
@@ -68,6 +71,7 @@ public class Factory : Singleton<Factory>
         enemyStraightPool.Initialize();
         enemySpreadPool.Initialize();
         enemyShooterPool.Initialize();
+        enemyAsteroidPool.Initialize();
         enemyBossPool.Initialize();
         enemyBulletBasePool.Initialize();
         enemyShooterBulletPool.Initialize();
@@ -107,6 +111,9 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.Enemyshooter:
                 result = enemyShooterPool.GetObject(spawn).gameObject;
                 break;
+            case PoolObjectType.EnemyAsteroid:
+                result = enemyAsteroidPool.GetObject(spawn).gameObject;
+                break;
             case PoolObjectType.EnemyBoss:
                 result = enemyBossPool.GetObject(spawn).gameObject;
                 break;
@@ -127,7 +134,7 @@ public class Factory : Singleton<Factory>
         return result;
     }
 
-    public GameObject GetObject(PoolObjectType type, Vector2 spawnPos)
+    public GameObject GetObject(PoolObjectType type, Vector3 spawnPos)
     {
         GameObject result = GetObject(type);
 
@@ -148,7 +155,7 @@ public class Factory : Singleton<Factory>
         return result;
     }
 
-    public GameObject GetEnemyBullet(EnemyBulletType type, Vector2 spawnPos, float bulletSpeed)
+    public GameObject GetEnemyBullet(EnemyBulletType type, Vector3 spawnPos, float bulletSpeed)
     {
         GameObject result = null;
         
@@ -169,6 +176,23 @@ public class Factory : Singleton<Factory>
         EnemyBulletBase enemyBullet = result.GetComponent<EnemyBulletBase>();
 
         enemyBullet.MoveSpeed = bulletSpeed;
+
+        result.transform.position = spawnPos;
+
+        return result;
+    }
+
+    /// <summary>
+    /// 운석 오브젝트를 반환하는 함수
+    /// </summary>
+    /// <param name="spawnPos">소환 위치</param>
+    /// <param name="_rotDir">회전 방향</param>
+    public GameObject GetAsteroid(Vector3 spawnPos)
+    {
+        GameObject result = GetObject(PoolObjectType.EnemyAsteroid);
+
+        EnemyAsteroid asteroid = result.GetComponent<EnemyAsteroid>();
+        asteroid.SetMoveDirection(spawnPos);
 
         result.transform.position = spawnPos;
 

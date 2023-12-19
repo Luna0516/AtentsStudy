@@ -47,14 +47,12 @@ public class EnemySpread : EnemyBase
     /// <summary>
     /// 발사 방향 1
     /// </summary>
-    private Vector2[] firVec1 = new Vector2[] { new Vector2(2, 0), new Vector2(-2, 0), new Vector2(0, 2), new Vector2(0, -2),
-                                                new Vector2(2, 2), new Vector2(-2, 2), new Vector2(-2, -2), new Vector2(2, -2) };
+    private Vector2[] firVec1 = new Vector2[] { new Vector2(-2, 1), new Vector2(-2, -1), new Vector2(-1, 2), new Vector2(-1, -2)};
 
     /// <summary>
     /// 발사 방향 2
     /// </summary>
-    private Vector2[] firVec2 = new Vector2[] { new Vector2(2, 1), new Vector2(2, -1), new Vector2(1, 2), new Vector2(1, -2),
-                                                new Vector2(-2, 1), new Vector2(-2, -1), new Vector2(-1, 2), new Vector2(-1, -2) };
+    private Vector2[] firVec2 = new Vector2[] { new Vector2(-3, 1), new Vector2(-3, -1), new Vector2(-1, 1), new Vector2(-1, -1)};
 
     private void Awake()
     {
