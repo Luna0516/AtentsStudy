@@ -204,7 +204,9 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Die()
     {
-
+        Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position);
+        onDie?.Invoke();
+        gameObject.SetActive(false);
     }
 
     /// <summary>

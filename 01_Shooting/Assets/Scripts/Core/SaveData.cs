@@ -16,5 +16,5 @@ public class SaveData
     /// <summary>
     /// 랭킹에 저장할 점수
     /// </summary>
-    public int[] score;
+    public int[] scores;
 }

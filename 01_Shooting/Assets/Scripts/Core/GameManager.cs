@@ -5,28 +5,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     /// <summary>
-    /// 플레이어
-    /// </summary>
-    private Player player;
-
-    /// <summary>
-    /// 플레이어 참조용 프로퍼티
-    /// </summary>
-    public Player Player
-    {
-        get
-        {
-            // 없으면 현재 씬에서 찾아서 반환
-            if (player == null)
-            {
-                player = FindObjectOfType<Player>();
-            }
-
-            return player;
-        }
-    }
-
-    /// <summary>
     /// 게임 점수
     /// </summary>
     private int score;
@@ -45,6 +23,48 @@ public class GameManager : Singleton<GameManager>
 
                 onChangeScore?.Invoke(score);
             }
+        }
+    }
+
+    /// <summary>
+    /// 플레이어 이름
+    /// </summary>
+    private string playerName = "None";
+
+    /// <summary>
+    /// 플레이어 이름 설정, 확인용 프로퍼티
+    /// </summary>
+    public string PlayerName
+    {
+        get => playerName;
+        set
+        {
+            if (playerName != value)
+            {
+                playerName = value;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 플레이어
+    /// </summary>
+    private Player player;
+
+    /// <summary>
+    /// 플레이어 참조용 프로퍼티
+    /// </summary>
+    public Player Player
+    {
+        get
+        {
+            // 없으면 현재 씬에서 찾아서 반환
+            if (player == null)
+            {
+                player = FindObjectOfType<Player>();
+            }
+
+            return player;
         }
     }
     
