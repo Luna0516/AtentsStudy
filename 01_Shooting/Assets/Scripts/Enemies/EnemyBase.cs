@@ -52,6 +52,20 @@ public class EnemyBase : PoolObject
     /// 죽으면 얻게 될 점수
     /// </summary>
     protected int score;
+
+    /// <summary>
+    /// 죽을 때 점수 계산해서 보내기
+    /// </summary>
+    protected int Score
+    {
+        get
+        {
+            // 점수 설정
+            score = (health * health) + 5;
+
+            return score;
+        }
+    }
     
     /// <summary>
     /// health가 0이하로 내려가면 실행할 델리게이트 (파라메터 : 점수)
@@ -62,11 +76,6 @@ public class EnemyBase : PoolObject
     {
         // 현재 체력을 최대 체력으로 설정
         Health = maxHealth;
-
-        // 점수 설정
-        {
-            score = (health * health) + 5;
-        }
 
         if (GameManager.Inst)
         {
@@ -100,7 +109,7 @@ public class EnemyBase : PoolObject
         // 터지는 이펙트 생성
         Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position);
 
-        onDie?.Invoke(score);
+        onDie?.Invoke(Score);
 
         gameObject.SetActive(false);
     }

@@ -2,8 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Difficulty
+{
+    Esey,
+    Normal,
+    Hard
+}
+
 public class GameManager : Singleton<GameManager>
 {
+    /// <summary>
+    /// 게임 난이도
+    /// </summary>
+    private Difficulty difficulty;
+
+    /// <summary>
+    /// 게임 난이도 변경 프로퍼티
+    /// </summary>
+    public Difficulty Difficulty
+    {
+        get => difficulty;
+        set
+        {
+            if (difficulty != value)
+            {
+                difficulty = value;
+                onChangeDifficulty?.Invoke((int)difficulty);
+            }
+        }
+    }
+
     /// <summary>
     /// 게임 점수
     /// </summary>
@@ -67,11 +95,16 @@ public class GameManager : Singleton<GameManager>
             return player;
         }
     }
-    
+
     /// <summary>
     /// 점수가 바뀔때마다 신호를 보낼 델리게이트
     /// </summary>
     public System.Action<int> onChangeScore;
+
+    /// <summary>
+    /// 게임 난이도가 바뀔때마다 신호를 보낼 델리게이트
+    /// </summary>
+    public System.Action<int> onChangeDifficulty;
 
     protected override void OnInitialize()
     {

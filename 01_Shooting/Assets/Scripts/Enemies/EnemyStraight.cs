@@ -42,12 +42,26 @@ public class EnemyStraight : EnemyBase
         base.OnEnable();
 
         speed = moveSpeed;
-        target = GameManager.Inst.Player.transform;
+
+        if (GameManager.Inst != null && GameManager.Inst.Player != null)
+        {
+            target = GameManager.Inst.Player.transform;
+        }
 
         // 회전값 초기화
         transform.rotation = Quaternion.identity;
 
         StartCoroutine(RushCorou());
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+
+        if (GameManager.Inst != null)
+        {
+            target = null;
+        }
     }
 
     private void FixedUpdate()

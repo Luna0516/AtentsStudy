@@ -54,7 +54,7 @@ public class EnemyMissileBullet : EnemyBulletBase
         // 현재 체력을 최대 체력으로 설정
         Health = maxHealth;
 
-        if (GameManager.Inst != null)
+        if (GameManager.Inst != null && GameManager.Inst.Player != null)
         {
             target = GameManager.Inst.Player.transform;
         }
