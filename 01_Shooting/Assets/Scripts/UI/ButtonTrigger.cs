@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class ButtonTrigger : MonoBehaviour
 {
@@ -25,9 +24,14 @@ public class ButtonTrigger : MonoBehaviour
     public ButtonType type;
 
     /// <summary>
-    /// 다음 넘어갈 씬의 이름
+    /// 메인 씬 이름
     /// </summary>
-    public string nextSceneName = "Map";
+    readonly string MainSceneName = "MainScene";
+
+    /// <summary>
+    /// 게임 씬 이름
+    /// </summary>
+    readonly string GameSceneName = "GameScene";
 
     private void Awake()
     {
@@ -61,7 +65,8 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnStart()
     {
-        StartCoroutine(LoadScene(nextSceneName));
+        Factory.Inst.DisableEnemy();
+        SceneHandler.Inst.NextSceneName = GameSceneName;
     }
 
     /// <summary>
@@ -85,7 +90,8 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnRestart()
     {
-        StartCoroutine(LoadScene(nextSceneName));
+        Factory.Inst.DisableEnemy();
+        SceneHandler.Inst.NextSceneName = GameSceneName;
     }
 
     /// <summary>
@@ -93,26 +99,7 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnMain()
     {
-        StartCoroutine(LoadScene(nextSceneName));
-    }
-
-    /// <summary>
-    /// 씬 넘어가는 코루틴
-    /// </summary>
-    private IEnumerator LoadScene(string sceneName)
-    {
-        AsyncOperation async = SceneManager.LoadSceneAsync(sceneName);
-
-        // 바로 전환 안되게
-        async.allowSceneActivation = false;
-
-        // 로딩이 끝나면
-        while (async.progress < 0.9f)
-        {
-            yield return null;
-        }
-
-        // 전환 하기
-        async.allowSceneActivation = true;
+        Factory.Inst.DisableEnemy();
+        SceneHandler.Inst.NextSceneName = MainSceneName;
     }
 }

@@ -54,6 +54,14 @@ public class Spawner : MonoBehaviour
         {
             StartCoroutine(SpawnCoroutine(spawnData));
         }
+
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.Player.onDie += () =>
+            {
+                StopAllCoroutines();
+            };
+        }
     }
 
     /// <summary>

@@ -122,8 +122,8 @@ public class Player : MonoBehaviour
 
     // 컴포넌트
     Animator anim;
-    Collider2D coll;
     SpriteRenderer spriteRenderer;
+    Rigidbody2D rigid;
 
     // 인풋 시스템
     PlayerInputActions inputActions;
@@ -133,8 +133,8 @@ public class Player : MonoBehaviour
         fireCorou = FireCoroutine();
 
         anim = GetComponent<Animator>();
-        coll = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rigid = GetComponent<Rigidbody2D>();
 
         inputActions = new PlayerInputActions();
 
@@ -187,11 +187,13 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.Translate(Time.fixedDeltaTime * inputVec * moveSpeed);
+        rigid.MovePosition(rigid.position + Time.fixedDeltaTime * inputVec * moveSpeed);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (gameObject.layer == LayerMask.NameToLayer("InvincibleLayer")) return;
+
         // 충돌한 게임오브젝트의 태그가 Enemy or EnemyBullet이면 목숨 감소;
         if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyBullet"))
         {
@@ -240,22 +242,23 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 무적 상태 로직용 코루틴 (깜박임 / 충돌 안됨)
     /// </summary>
-    /// <returns></returns>
     private IEnumerator InvisibleCoroutine()
     {
-        coll.enabled = false;
+        gameObject.layer = LayerMask.NameToLayer("InvincibleLayer");
 
-        float elapsedTime = 0;
+        float invisibleTime = 0;
 
-        while (elapsedTime < invincibilityDuration)
+        while (invisibleTime < invincibilityDuration)
         {
             spriteRenderer.enabled = !spriteRenderer.enabled;
 
             yield return blinkTimer;
-            elapsedTime += blinkInterval;
+
+            invisibleTime += blinkInterval;
         }
 
-        coll.enabled = true;
+        gameObject.layer = LayerMask.NameToLayer("Player"); ;
+
         spriteRenderer.enabled = true;
     }
 

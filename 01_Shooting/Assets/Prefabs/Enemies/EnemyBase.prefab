@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6095115669213442664}
   - component: {fileID: 2454620549860277534}
   - component: {fileID: 7576130565937110242}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyBase
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -111,7 +111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0
   maxHealth: 5
-  score: 10
 --- !u!1 &7516372524241855008
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,7 +121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6607296441043384649}
   - component: {fileID: 3552537313247984546}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

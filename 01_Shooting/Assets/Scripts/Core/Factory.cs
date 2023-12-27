@@ -198,4 +198,25 @@ public class Factory : Singleton<Factory>
 
         return result;
     }
+
+    /// <summary>
+    /// 스포너로 소환된 적을 모두 비활성화 하는 함수
+    /// </summary>
+    public void DisableEnemy()
+    {
+        playerBulletPool.Initialize();
+        playerBulletHitEffectPool.Initialize();
+        explosionEffectPool.Initialize();
+        enemyOriginPool.Initialize();
+        enemyWavePool.Initialize();
+        enemyCurvePool.Initialize();
+        enemyStraightPool.Initialize();
+        enemySpreadPool.Initialize();
+        enemyShooterPool.Initialize();
+        enemyAsteroidPool.Initialize();
+        enemyBossPool.Initialize();
+        enemyBulletBasePool.Initialize();
+        enemyShooterBulletPool.Initialize();
+        enemyMissileBulletPool.Initialize();
+    }
 }

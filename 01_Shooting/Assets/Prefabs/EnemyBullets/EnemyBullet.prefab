@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5110854760566781415}
   - component: {fileID: 4577270076939240536}
   - component: {fileID: -4944597413112821187}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyBullet
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -161,6 +161,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43d7c45400df7a24f8bc73b066f777bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 830317617348258784, guid: 9d03eaf08bb200841aec0199197367a1, type: 3}
-  - {fileID: 6112890488319390909, guid: a494223929d7969429f93a50dafac58f, type: 3}

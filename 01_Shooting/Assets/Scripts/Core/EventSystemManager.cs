@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem.UI;
 
 public class EventSystemManager : Singleton<EventSystemManager>
 {
@@ -22,7 +23,8 @@ public class EventSystemManager : Singleton<EventSystemManager>
         {
             GameObject eventSystemObj = new GameObject("EventSystem");
             eventSystemObj.AddComponent<EventSystem>();
-            eventSystemObj.AddComponent<StandaloneInputModule>();
+            eventSystemObj.AddComponent<InputSystemUIInputModule>();
+            eventSystemObj.AddComponent<EventSystemManager>();
         }
     }
 }

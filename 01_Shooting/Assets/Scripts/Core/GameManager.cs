@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Difficulty
 {
-    Esey,
+    Easy,
     Normal,
     Hard
 }
@@ -27,6 +27,8 @@ public class GameManager : Singleton<GameManager>
             if (difficulty != value)
             {
                 difficulty = value;
+
+                // 난이도 변경되었으면 신호 보내기 (델리게이트)
                 onChangeDifficulty?.Invoke((int)difficulty);
             }
         }
@@ -49,6 +51,7 @@ public class GameManager : Singleton<GameManager>
             {
                 score = value;
 
+                // 점수 변경되면 신호 보내기 (델리게이트)
                 onChangeScore?.Invoke(score);
             }
         }
@@ -70,6 +73,9 @@ public class GameManager : Singleton<GameManager>
             if (playerName != value)
             {
                 playerName = value;
+
+                // 플레이어 이름이 바뀌면 신호 보내기 (델리게이트)
+                onChangePlayerName?.Invoke(playerName);
             }
         }
     }
@@ -105,6 +111,11 @@ public class GameManager : Singleton<GameManager>
     /// 게임 난이도가 바뀔때마다 신호를 보낼 델리게이트
     /// </summary>
     public System.Action<int> onChangeDifficulty;
+
+    /// <summary>
+    /// 게임 난이도가 바뀔때마다 신호를 보낼 델리게이트
+    /// </summary>
+    public System.Action<string> onChangePlayerName;
 
     protected override void OnInitialize()
     {

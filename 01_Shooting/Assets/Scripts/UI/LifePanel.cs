@@ -24,15 +24,6 @@ public class LifePanel : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        if (GameManager.Inst != null)
-        {
-            // 플레이어의 델리게이트와 연결 해제
-            GameManager.Inst.Player.onLifeCountChange -= ChangePlayerLifePanel;
-        }
-    }
-
     private void ChangePlayerLifePanel(int life)
     {
         lifeText.text = $"{life}";
