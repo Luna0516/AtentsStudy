@@ -18,7 +18,8 @@ public class GameOverPanel : MonoBehaviour
     {
         if(GameManager.Inst != null)
         {
-            GameManager.Inst.Player.onDie += SetActiveCanvas;
+            // 게임이 종료되면 창 활성화
+            GameManager.Inst.onGameEnd += SetActiveCanvas;
         }
 
         canvas.alpha = 0;
@@ -29,7 +30,7 @@ public class GameOverPanel : MonoBehaviour
     /// <summary>
     /// 캔버스 그룹을 통해 상태창 띄우는 함수
     /// </summary>
-    private void SetActiveCanvas()
+    private void SetActiveCanvas(bool clear)
     {
         canvas.alpha = 1;
         canvas.blocksRaycasts = true;

@@ -13,7 +13,7 @@ public enum PoolObjectType
     EnemyCurve,
     EnemyStraight,
     EnemySpread,
-    Enemyshooter,
+    EnemyShooter,
     EnemyAsteroid,
     EnemyBoss,
     EnemyBulletBase,
@@ -108,7 +108,7 @@ public class Factory : Singleton<Factory>
             case PoolObjectType.EnemySpread:
                 result = enemySpreadPool.GetObject(spawn).gameObject;
                 break;
-            case PoolObjectType.Enemyshooter:
+            case PoolObjectType.EnemyShooter:
                 result = enemyShooterPool.GetObject(spawn).gameObject;
                 break;
             case PoolObjectType.EnemyAsteroid:
@@ -157,7 +157,7 @@ public class Factory : Singleton<Factory>
 
     public GameObject GetEnemyBullet(EnemyBulletType type, Vector3 spawnPos, float bulletSpeed)
     {
-        GameObject result = null;
+        GameObject result;
         
         switch (type)
         {

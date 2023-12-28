@@ -20,47 +20,71 @@ public class Spawner : MonoBehaviour
     [Header("스폰되는 높이(half)")]
     public float halfHeight;
 
-    [System.Serializable]
-    public struct SpawnData
-    {
-        public SpawnData(PoolObjectType _type, float _interval)
-        {
-            type = _type;
-            interval = _interval;
-        }
-
-        /// <summary>
-        /// 스폰시킬 타입
-        /// </summary>
-        [Header("스폰할 적 타입")]
-        public PoolObjectType type;
-
-        /// <summary>
-        /// 스폰되는 시간 (쿨타임)
-        /// </summary>
-        [Header("스폰되는 시간")]
-        public float interval;
-    }
+    /// <summary>
+    /// 스포너에 사용할 레벨별 스폰데이터
+    /// </summary>
+    public SpawnerLevelData[] spawnerLevelDatas;
 
     /// <summary>
-    /// 스폰 될 데이터
+    /// 보스 소환을 위한 경과시간 체크용 변수
     /// </summary>
-    [Header("스폰 데이터들")]
-    public List<SpawnData> spawnDatas;
+    private float elapsedTime = 0;
+
+    /// <summary>
+    /// 보스 소환되었는지 확인하는 변수
+    /// </summary>
+    private bool isBossSpawn;
 
     private void Start()
     {
-        foreach (var spawnData in spawnDatas)
-        {
-            StartCoroutine(SpawnCoroutine(spawnData));
+        List<SpawnData> spawnDatas = new List<SpawnData>();
+
+        if (GameManager.Inst != null) {
+            int arrayLength = spawnerLevelDatas.Length;
+            for(int i = 0; i < arrayLength; i++)
+            {
+                if (spawnerLevelDatas[i].difficulty == GameManager.Inst.Difficulty)
+                {
+                    spawnDatas = spawnerLevelDatas[i].spawnDatas;
+                    break;
+                }
+            }
         }
 
-        if (GameManager.Inst != null)
+        if (spawnDatas.Count > 0)
         {
-            GameManager.Inst.Player.onDie += () =>
+            foreach (var spawnData in spawnDatas)
             {
+                StartCoroutine(SpawnCoroutine(spawnData));
+            }
+
+            if (GameManager.Inst != null)
+            {
+                GameManager.Inst.Player.onDie += () =>
+                {
+                    StopAllCoroutines();
+                };
+            }
+        }
+    }
+
+    private void OnEnable()
+    {
+        isBossSpawn = false;
+    }
+
+    private void Update()
+    {
+        if (!isBossSpawn)
+        {
+            elapsedTime += Time.deltaTime;
+
+            if (elapsedTime > 60)
+            {
+                isBossSpawn = true;
                 StopAllCoroutines();
-            };
+                Factory.Inst.GetObject(PoolObjectType.EnemyBoss, new Vector3(spawnX, 0.0f));
+            }
         }
     }
 
@@ -82,6 +106,7 @@ public class Spawner : MonoBehaviour
                 break;
             case PoolObjectType.EnemyOrigin:
             case PoolObjectType.EnemyWave:
+            case PoolObjectType.EnemyShooter:
             case PoolObjectType.EnemyCurve:
             case PoolObjectType.EnemyStraight:
                 Factory.Inst.GetObject(type, spawnPos);
@@ -92,7 +117,6 @@ public class Spawner : MonoBehaviour
             default:
                 break;
         }
-
     }
 
     /// <summary>

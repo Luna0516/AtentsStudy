@@ -243,9 +243,14 @@ public class EnemyBoss : EnemyBase
         StopAllCoroutines();
         speed = 0.0f;
 
-        StartCoroutine(DieEffect());
+        onDie?.Invoke(Score);
 
-        onDie?.Invoke(score);
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.onGameEnd?.Invoke(true);
+        }
+
+        StartCoroutine(DieEffect());
     }
 
     /// <summary>

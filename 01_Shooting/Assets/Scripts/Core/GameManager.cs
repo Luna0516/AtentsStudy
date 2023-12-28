@@ -103,6 +103,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     /// <summary>
+    /// 게임이 끝나면 신호보내기 (델리게이트) (파라메터 : 게임 클리어 여부)
+    /// </summary>
+    public System.Action<bool> onGameEnd;
+
+    /// <summary>
     /// 점수가 바뀔때마다 신호를 보낼 델리게이트
     /// </summary>
     public System.Action<int> onChangeScore;
@@ -120,6 +125,19 @@ public class GameManager : Singleton<GameManager>
     protected override void OnInitialize()
     {
         base.OnInitialize();
+
+        player = FindObjectOfType<Player>();
+    }
+
+    /// <summary>
+    /// 게임 씬에 들어오면 초기화 할 요소들
+    /// </summary>
+    public void Init()
+    {
+        onGameEnd = null;
+        onChangeScore = null;
+        onChangeDifficulty = null;
+        onChangePlayerName = null;
 
         player = FindObjectOfType<Player>();
     }

@@ -29,7 +29,7 @@ public class TestSpawn : TestBase
 
     protected override void Test5(InputAction.CallbackContext context)
     {
-        Factory.Inst.GetObject(PoolObjectType.Enemyshooter, transform.position);
+        Factory.Inst.GetObject(PoolObjectType.EnemyShooter, transform.position);
     }
 
     protected override void Test6(InputAction.CallbackContext context)

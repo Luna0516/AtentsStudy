@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -104,6 +105,7 @@ public class Singleton<T> : MonoBehaviour where T : Component
 
         if (mode != LoadSceneMode.Additive)
         {
+            // 싱글로 초기화 되면 실행
             OnInitialize();
         }
     }

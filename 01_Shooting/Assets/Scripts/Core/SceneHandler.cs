@@ -110,6 +110,8 @@ public class SceneHandler : Singleton<SceneHandler>
         PresentSceneName = NextSceneName;
         nextSceneName = null;
 
+        GameManager.Inst.Init();
+
         async.allowSceneActivation = true;
 
         SceneManager.UnloadSceneAsync(PreviousSceneName);

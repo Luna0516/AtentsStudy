@@ -43,6 +43,14 @@ public class ScorePanel : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.onChangeScore -= RefreshScore;
+        }
+    }
+
     private void Update()
     {
         if (currentScore < changeScore)

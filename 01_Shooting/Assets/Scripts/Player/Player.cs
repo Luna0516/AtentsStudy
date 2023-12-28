@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 플레이어의 목숨
     /// </summary>
-    private int life = 3;
+    private int life;
 
     /// <summary>
     /// 플레이어의 목숨에 변화 설정을 위한 프로퍼티
@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// 기본 체력 (불러오기용)
+    /// </summary>
+    private int defaultLife = 3;
 
     /// <summary>
     /// 무적 시간
@@ -73,7 +78,7 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 총알 발사 딜레이 시간
     /// </summary>
-    private float fireDelay = 0.2f;
+    private float fireDelay = 0.1f;
 
     /// <summary>
     /// 총알 발사 딜레이 확인용 시간
@@ -164,6 +169,10 @@ public class Player : MonoBehaviour
         inputActions.Player.Fire.canceled += StoptFire;
         inputActions.Player.Boost.performed += OnBoost;
         inputActions.Player.Boost.canceled += OnBoost;
+
+        // 초기화
+        Life = defaultLife;
+        GameManager.Inst.Score = 0;
     }
 
     private void OnDisable()
@@ -178,6 +187,7 @@ public class Player : MonoBehaviour
 
         // 델리게이트 연결 해제
         onLifeCountChange = null;
+        onDie = null;
     }
 
     private void Update()
@@ -207,7 +217,10 @@ public class Player : MonoBehaviour
     private void Die()
     {
         Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position);
-        onDie?.Invoke();
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.onGameEnd?.Invoke(false);
+        }
         gameObject.SetActive(false);
     }
 

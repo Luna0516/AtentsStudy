@@ -61,7 +61,7 @@ public class RankingPanel : MonoBehaviour
 
         if (GameManager.Inst != null)
         {
-            GameManager.Inst.Player.onDie += () =>
+            GameManager.Inst.onGameEnd += (_) =>
             {
                 int newScore = GameManager.Inst.Score;
                 RankingUpdate(newScore);

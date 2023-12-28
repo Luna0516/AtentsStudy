@@ -5,6 +5,11 @@ using UnityEngine;
 public class EnemyBase : PoolObject
 {
     /// <summary>
+    /// 적이 살아있는지 확인용 변수
+    /// </summary>
+    protected bool isAlive;
+
+    /// <summary>
     /// 위치 초기화용 상수
     /// </summary>
     protected const float Default_Pos = -10000.0f;
@@ -32,11 +37,12 @@ public class EnemyBase : PoolObject
         get => health;
         protected set
         {
-            if (health != value)
+            if (health != value && isAlive)
             {
                 health = value;
                 if (health <= 0)
                 {
+                    isAlive = false;
                     Die();
                 }
             }
@@ -61,7 +67,7 @@ public class EnemyBase : PoolObject
         get
         {
             // 점수 설정
-            score = (health * health) + 5;
+            score = (maxHealth * maxHealth) + 5;
 
             return score;
         }
@@ -81,16 +87,15 @@ public class EnemyBase : PoolObject
         {
             onDie += GameManager.Inst.AddScore;
         }
+
+        isAlive = true;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
 
-        if (GameManager.Inst)
-        {
-            onDie -= GameManager.Inst.AddScore;
-        }
+        onDie = null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

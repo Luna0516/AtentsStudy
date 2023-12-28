@@ -46,16 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnX: 12
   halfHeight: 4.5
-  spawnDatas:
-  - type: 4
-    interval: 2
-  - type: 5
-    interval: 4
-  - type: 6
-    interval: 6
-  - type: 7
-    interval: 4
-  - type: 8
-    interval: 25
-  - type: 9
-    interval: 20
+  spawnerLevelDatas:
+  - {fileID: 11400000, guid: 4212f6c79cd2db5468df3d51d9333d20, type: 2}
+  - {fileID: 11400000, guid: f1c9996905f633c41b497f448bb2640d, type: 2}
+  - {fileID: 11400000, guid: 7cdfac89fde165649b0b67c5f08c5413, type: 2}
