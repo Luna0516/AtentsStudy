@@ -2,11 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 난이도
+/// </summary>
 public enum Difficulty
 {
     Easy,
     Normal,
     Hard
+}
+
+/// <summary>
+/// 게임 상태
+/// </summary>
+public enum GameState
+{
+    Main,
+    Play,
+    Pause,
+    End,
 }
 
 public class GameManager : Singleton<GameManager>
@@ -27,9 +41,40 @@ public class GameManager : Singleton<GameManager>
             if (difficulty != value)
             {
                 difficulty = value;
+            }
+        }
+    }
 
-                // 난이도 변경되었으면 신호 보내기 (델리게이트)
-                onChangeDifficulty?.Invoke((int)difficulty);
+    /// <summary>
+    /// 게임 현재 상태 => 마우스 커서 조절용
+    /// </summary>
+    private GameState gameState;
+
+    /// <summary>
+    /// 마우스 커서 조절용 프로퍼티
+    /// </summary>
+    public GameState GameState
+    {
+        get => gameState;
+        set
+        {
+            if (gameState != value)
+            {
+                gameState = value;
+
+                // 게임 상태에 따라 마우스 커서 숨기기
+                switch (gameState)
+                {
+                    case GameState.Play:
+                        Cursor.visible = false;
+                        break;
+                    case GameState.Main:
+                    case GameState.Pause:
+                    case GameState.End:
+                    default:
+                        Cursor.visible = true;
+                        break;
+                }
             }
         }
     }
@@ -113,12 +158,7 @@ public class GameManager : Singleton<GameManager>
     public System.Action<int> onChangeScore;
 
     /// <summary>
-    /// 게임 난이도가 바뀔때마다 신호를 보낼 델리게이트
-    /// </summary>
-    public System.Action<int> onChangeDifficulty;
-
-    /// <summary>
-    /// 게임 난이도가 바뀔때마다 신호를 보낼 델리게이트
+    /// 플레이어의 이름이 바뀔때마다 신호를 보낼 델리게이트
     /// </summary>
     public System.Action<string> onChangePlayerName;
 
@@ -136,7 +176,6 @@ public class GameManager : Singleton<GameManager>
     {
         onGameEnd = null;
         onChangeScore = null;
-        onChangeDifficulty = null;
         onChangePlayerName = null;
 
         player = FindObjectOfType<Player>();

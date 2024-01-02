@@ -266,6 +266,7 @@ public class Player : MonoBehaviour
         if (GameManager.Inst != null)
         {
             GameManager.Inst.onGameEnd?.Invoke(false);
+            GameManager.Inst.GameState = GameState.End;
         }
         gameObject.SetActive(false);
     }

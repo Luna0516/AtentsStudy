@@ -37,20 +37,24 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
+        // 스폰데이터 리스트로 할당
         List<SpawnData> spawnDatas = new List<SpawnData>();
 
+        // 퍼블릭으로 받은 데이터 중 게임 매니저의 난이도와 비교후
         if (GameManager.Inst != null) {
             int arrayLength = spawnerLevelDatas.Length;
             for(int i = 0; i < arrayLength; i++)
             {
                 if (spawnerLevelDatas[i].difficulty == GameManager.Inst.Difficulty)
                 {
+                    // 스폰데이터리스트에 난이도에 맞는 데이터 넣기
                     spawnDatas = spawnerLevelDatas[i].spawnDatas;
                     break;
                 }
             }
         }
 
+        // 스폰데이터에 있는 정보대로 적 스폰코루틴 실행
         if (spawnDatas.Count > 0)
         {
             foreach (var spawnData in spawnDatas)
@@ -58,6 +62,7 @@ public class Spawner : MonoBehaviour
                 StartCoroutine(SpawnCoroutine(spawnData));
             }
 
+            // 만약 플레이어가 죽으면 코루틴 정지
             if (GameManager.Inst != null)
             {
                 GameManager.Inst.Player.onDie += () =>

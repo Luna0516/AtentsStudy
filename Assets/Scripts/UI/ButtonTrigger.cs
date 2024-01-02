@@ -12,6 +12,8 @@ public class ButtonTrigger : MonoBehaviour
     {
         None,
         Start,  // 게임시작
+        Pause,  // 일시정지
+        UnPause,// 일시정지 해제
         Manual, // 조작방법
         Exit,   // 게임종료
         Restart,// 다시하기
@@ -42,6 +44,12 @@ public class ButtonTrigger : MonoBehaviour
             case ButtonType.Start:
                 button.onClick.AddListener(OnStart);
                 break;
+            case ButtonType.Pause:
+                button.onClick.AddListener(OnPause);
+                break;
+            case ButtonType.UnPause:
+                button.onClick.AddListener(UnPause);
+                break;
             case ButtonType.Manual:
                 button.onClick.AddListener(OnManual);
                 break;
@@ -67,6 +75,25 @@ public class ButtonTrigger : MonoBehaviour
     {
         Factory.Inst.DisableEnemy();
         SceneHandler.Inst.NextSceneName = GameSceneName;
+        GameManager.Inst.GameState = GameState.Play;
+    }
+
+    /// <summary>
+    /// 게임 일시 정지 함수
+    /// </summary>
+    private void OnPause()
+    {
+        GameManager.Inst.GameState = GameState.Pause;
+        Time.timeScale = 0;
+    }
+
+    /// <summary>
+    /// 게임 일시 정지 해제 함수
+    /// </summary>
+    private void UnPause()
+    {
+        GameManager.Inst.GameState = GameState.Play;
+        Time.timeScale = 1;
     }
 
     /// <summary>
@@ -92,6 +119,7 @@ public class ButtonTrigger : MonoBehaviour
     {
         Factory.Inst.DisableEnemy();
         SceneHandler.Inst.NextSceneName = GameSceneName;
+        GameManager.Inst.GameState = GameState.Play;
     }
 
     /// <summary>
@@ -101,5 +129,6 @@ public class ButtonTrigger : MonoBehaviour
     {
         Factory.Inst.DisableEnemy();
         SceneHandler.Inst.NextSceneName = MainSceneName;
+        GameManager.Inst.GameState = GameState.Main;
     }
 }

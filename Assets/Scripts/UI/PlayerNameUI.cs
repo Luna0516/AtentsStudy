@@ -33,6 +33,10 @@ public class PlayerNameUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 플레이어 이름 표시 리프레쉬
+    /// </summary>
+    /// <param name="newName"></param>
     private void RefreshPlayerName(string newName)
     {
         playerName.text = $"{newName}";

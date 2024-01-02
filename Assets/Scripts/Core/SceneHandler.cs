@@ -104,6 +104,9 @@ public class SceneHandler : Singleton<SceneHandler>
         PresentSceneName = SceneManager.GetActiveScene().name;
     }
 
+    /// <summary>
+    /// 다음 씬 로딩 후 이전 씬 해제
+    /// </summary>
     private void StartNextSceneLoading()
     {
         PreviousSceneName = PresentSceneName;
@@ -117,6 +120,9 @@ public class SceneHandler : Singleton<SceneHandler>
         SceneManager.UnloadSceneAsync(PreviousSceneName);
     }
 
+    /// <summary>
+    /// 로딩씬 해제
+    /// </summary>
     private void EndNextSceneLoading()
     {
         SceneManager.UnloadSceneAsync(loadingSceneName);

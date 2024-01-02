@@ -245,11 +245,6 @@ public class EnemyBoss : EnemyBase
 
         onDie?.Invoke(Score);
 
-        if (GameManager.Inst != null)
-        {
-            GameManager.Inst.onGameEnd?.Invoke(true);
-        }
-
         StartCoroutine(DieEffect());
     }
 
@@ -279,6 +274,13 @@ public class EnemyBoss : EnemyBase
             }
 
             yield return null;
+        }
+
+        // 터지는 이펙트가 끝나면 게임 종료 신호
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.onGameEnd?.Invoke(true);
+            GameManager.Inst.GameState = GameState.End;
         }
 
         gameObject.SetActive(false);
