@@ -62,17 +62,22 @@ public class GameManager : Singleton<GameManager>
             {
                 gameState = value;
 
-                // 게임 상태에 따라 마우스 커서 숨기기
+                // 게임 상태에 따라 마우스 커서 숨기기 -> 일단 취소
                 switch (gameState)
                 {
                     case GameState.Play:
-                        Cursor.visible = false;
+                        //Cursor.visible = false;
+                        Time.timeScale = 1;
+                        break;
+                    case GameState.Pause:
+                        //Cursor.visible = true;
+                        Time.timeScale = 0;
                         break;
                     case GameState.Main:
-                    case GameState.Pause:
                     case GameState.End:
                     default:
-                        Cursor.visible = true;
+                        //Cursor.visible = true;
+                        Time.timeScale = 1;
                         break;
                 }
             }
@@ -153,6 +158,11 @@ public class GameManager : Singleton<GameManager>
     public System.Action<bool> onGameEnd;
 
     /// <summary>
+    /// 게임 일시정지 되면 신호 보내기 (파라메터 : 게임 일시정지 여부)
+    /// </summary>
+    public System.Action<bool> onGamePasue;
+
+    /// <summary>
     /// 점수가 바뀔때마다 신호를 보낼 델리게이트
     /// </summary>
     public System.Action<int> onChangeScore;
@@ -177,6 +187,7 @@ public class GameManager : Singleton<GameManager>
         onGameEnd = null;
         onChangeScore = null;
         onChangePlayerName = null;
+        onGamePasue = null;
 
         player = FindObjectOfType<Player>();
     }

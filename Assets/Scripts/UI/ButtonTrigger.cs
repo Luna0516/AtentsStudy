@@ -83,8 +83,8 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnPause()
     {
+        GameManager.Inst.onGamePasue?.Invoke(true);
         GameManager.Inst.GameState = GameState.Pause;
-        Time.timeScale = 0;
     }
 
     /// <summary>
@@ -92,8 +92,8 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void UnPause()
     {
+        GameManager.Inst.onGamePasue?.Invoke(false);
         GameManager.Inst.GameState = GameState.Play;
-        Time.timeScale = 1;
     }
 
     /// <summary>
@@ -101,7 +101,6 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnManual()
     {
-        
     }
 
     /// <summary>
