@@ -9,6 +9,7 @@ TagManager:
   - EnemyBullet
   - KillZone
   - Border
+  - Item
   layers:
   - Default
   - TransparentFX

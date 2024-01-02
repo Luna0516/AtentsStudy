@@ -78,6 +78,28 @@ public class EnemyBase : PoolObject
     /// </summary>
     public System.Action<int> onDie;
 
+    /// <summary>
+    /// 아이템 나올 확률
+    /// </summary>
+    private int probability = 10;
+
+    /// <summary>
+    /// 확률 배열
+    /// </summary>
+    protected int[] probabilityArray;
+
+    protected virtual void Awake()
+    {
+        probabilityArray = new int[100];
+
+        int arrayLength = probabilityArray.Length;
+
+        for(int i = 0;i< arrayLength; i++)
+        {
+            probabilityArray[i] = i + 1;
+        }
+    }
+
     protected virtual void OnEnable()
     {
         // 현재 체력을 최대 체력으로 설정
@@ -113,6 +135,13 @@ public class EnemyBase : PoolObject
     {
         // 터지는 이펙트 생성
         Factory.Inst.GetObject(PoolObjectType.ExplosionEffect, transform.position);
+
+        // 셔플 함수로 배열 섞기
+        Utile.Shuffle(probabilityArray);
+        if (probabilityArray[0] <= probability)
+        {
+            Factory.Inst.GetObject(PoolObjectType.ItemPowerUp, transform.position);
+        }
 
         onDie?.Invoke(Score);
 

@@ -19,6 +19,7 @@ public enum PoolObjectType
     EnemyBulletBase,
     EnemyShooterBullet,
     EnemyMissileBullet,
+    ItemPowerUp,
 }
 
 public enum EnemyBulletType
@@ -44,6 +45,7 @@ public class Factory : Singleton<Factory>
     EnemyBulletBasePool enemyBulletBasePool;
     EnemyShooterBulletPool enemyShooterBulletPool;
     EnemyMissileBulletPool enemyMissileBulletPool;
+    ItemPowerUpPool itemPowerUpPool;
 
     protected override void OnInitialize()
     {
@@ -61,6 +63,7 @@ public class Factory : Singleton<Factory>
         enemyBulletBasePool = GetComponentInChildren<EnemyBulletBasePool>();
         enemyShooterBulletPool = GetComponentInChildren<EnemyShooterBulletPool>();
         enemyMissileBulletPool = GetComponentInChildren<EnemyMissileBulletPool>();
+        itemPowerUpPool = GetComponentInChildren<ItemPowerUpPool>();
 
         playerBulletPool.Initialize();
         playerBulletHitEffectPool.Initialize();
@@ -76,6 +79,7 @@ public class Factory : Singleton<Factory>
         enemyBulletBasePool.Initialize();
         enemyShooterBulletPool.Initialize();
         enemyMissileBulletPool.Initialize();
+        itemPowerUpPool.Initialize();
     }
 
     public GameObject GetObject(PoolObjectType type, Transform spawn = null)
@@ -125,6 +129,9 @@ public class Factory : Singleton<Factory>
                 break;
             case PoolObjectType.EnemyMissileBullet:
                 result = enemyMissileBulletPool.GetObject(spawn).gameObject;
+                break;
+            case PoolObjectType.ItemPowerUp:
+                result = itemPowerUpPool.GetObject(spawn).gameObject;
                 break;
             case PoolObjectType.None:
             default:
@@ -218,5 +225,6 @@ public class Factory : Singleton<Factory>
         enemyBulletBasePool.Initialize();
         enemyShooterBulletPool.Initialize();
         enemyMissileBulletPool.Initialize();
+        itemPowerUpPool.Initialize();
     }
 }

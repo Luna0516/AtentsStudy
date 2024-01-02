@@ -13,10 +13,10 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 플레이어의 목숨에 변화 설정을 위한 프로퍼티
     /// </summary>
-    private int Life
+    public int Life
     {
         get => life;
-        set
+        private set
         {
             // 목숨이 변경하는 값과 다르면
             if (life != value && value > -1)
@@ -78,7 +78,33 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 총알 발사 딜레이 시간
     /// </summary>
-    private float fireDelay = 0.1f;
+    private float fireDelay = 0.2f;
+
+    /// <summary>
+    /// 총알 발사 딜레이 시간 설정용 프로퍼티
+    /// </summary>
+    public float FireDelay
+    {
+        get => fireDelay;
+        private set
+        {
+            if(fireDelay != value)
+            {
+                Debug.Log($"아이템 먹기 전 총알 발사 딜레이 : {fireDelay}");
+               
+                fireDelay = Mathf.Max(minFireDelay, value);
+
+                Debug.Log($"아이템 먹고 후 총알 발사 딜레이 : {fireDelay}");
+            }
+        }
+    }
+
+    private float minFireDelay;
+
+    /// <summary>
+    /// 초기 발사 딜레이 시간
+    /// </summary>
+    private float defaultfireDelay;
 
     /// <summary>
     /// 총알 발사 딜레이 확인용 시간
@@ -147,6 +173,12 @@ public class Player : MonoBehaviour
         boostSpeed = moveSpeed * 2f;
         defaultSpeed = moveSpeed;
 
+        // 발사 속도 저장
+        defaultfireDelay = fireDelay;
+
+        // 최고 발사 속도 지정
+        minFireDelay = defaultfireDelay * 0.5f;
+
         // 코루틴용 대기 시간 저장
         blinkTimer = new WaitForSeconds(blinkInterval);
 
@@ -173,6 +205,7 @@ public class Player : MonoBehaviour
         // 초기화
         Life = defaultLife;
         GameManager.Inst.Score = 0;
+        FireDelay = defaultfireDelay;
     }
 
     private void OnDisable()
@@ -208,6 +241,19 @@ public class Player : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("EnemyBullet"))
         {
             Life--;
+        }
+
+        // 충돌한 오브젝트가 Item 인지 확인
+        if (collision.gameObject.CompareTag("Item"))
+        {
+            ItemBase item = collision.gameObject.GetComponent<ItemBase>();
+
+            if(item != null)
+            {
+                SetItemApply(item);
+            }
+
+            collision.gameObject.SetActive(false);
         }
     }
 
@@ -315,6 +361,28 @@ public class Player : MonoBehaviour
         else
         {
             moveSpeed = boostSpeed;
+        }
+    }
+
+    /// <summary>
+    /// 아이템 능력치 적용 함수
+    /// </summary>
+    /// <param name="item">얻은 아이템</param>
+    private void SetItemApply(ItemBase item)
+    {
+        // 아이템 타입 가져오기
+        ItemType itemType = item.Type;
+
+        // 아이템 타입 별로 인터페이스 확인 하고 능력치 적용
+        switch (itemType)
+        {
+            case ItemType.PowerUp:
+                IPower power = item as IPower;
+                FireDelay -= power.PowerUpValue;
+                break;
+            case ItemType.None:
+            default:
+                break;
         }
     }
 }

@@ -54,8 +54,10 @@ public class EnemySpread : EnemyBase
     /// </summary>
     private Vector2[] firVec2 = new Vector2[] { new Vector2(-3, 1), new Vector2(-3, -1), new Vector2(-1, 1), new Vector2(-1, -1)};
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         // 단위벡터로 바꾸기
         // foreach는 readOnly로 되어서 바꿀 수 없다고 한다...
 

@@ -82,7 +82,7 @@ public class EnemyBoss : EnemyBase
     /// </summary>
     private Transform target;
 
-    private void Awake()
+    protected override void Awake()
     {
         // 총알 및 미사일 발사 위치 설정
         Transform child = transform.GetChild(1);
