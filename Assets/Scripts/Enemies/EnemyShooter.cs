@@ -23,7 +23,7 @@ public class EnemyShooter : EnemyBase
     /// <summary>
     /// 총알 속도
     /// </summary>
-    public float bulletSpeed = 7.0f;
+    public float bulletSpeed = 12.0f;
 
     /// <summary>
     /// 시간 확인용 변수

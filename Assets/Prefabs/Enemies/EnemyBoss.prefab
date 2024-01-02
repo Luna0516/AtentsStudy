@@ -706,8 +706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 1
-  maxHealth: 100
-  score: 300
+  maxHealth: 50
   appearSpeed: 2
   fireDelay: 0.5
   fireMissileDelay: 4

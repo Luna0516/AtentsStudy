@@ -102,13 +102,17 @@ public class EnemyBase : PoolObject
 
     protected virtual void OnEnable()
     {
-        // 현재 체력을 최대 체력으로 설정
-        Health = maxHealth;
-
+        // 게임 난이도 별 보정 수치
+        int correction = 1;
+        
         if (GameManager.Inst)
         {
+            correction = (int)GameManager.Inst.Difficulty + 1;
             onDie += GameManager.Inst.AddScore;
         }
+
+        // 현재 체력을 최대 체력으로 설정
+        Health = maxHealth * correction;
 
         isAlive = true;
     }

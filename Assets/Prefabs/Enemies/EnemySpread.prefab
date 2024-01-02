@@ -95,8 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
-  maxHealth: 15
-  score: 30
-  spreadBullet: {fileID: 418169467916816598, guid: 77df736b16b496f449629b3372b72ecc, type: 3}
+  maxHealth: 10
   fireDelay: 0.5
+  bulletSpeed: 1.5
   apperTime: 3

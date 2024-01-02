@@ -90,11 +90,8 @@ public class Player : MonoBehaviour
         {
             if(fireDelay != value)
             {
-                Debug.Log($"아이템 먹기 전 총알 발사 딜레이 : {fireDelay}");
-               
+                // 발사 속도 최소값으로 막기
                 fireDelay = Mathf.Max(minFireDelay, value);
-
-                Debug.Log($"아이템 먹고 후 총알 발사 딜레이 : {fireDelay}");
             }
         }
     }

@@ -11,13 +11,14 @@ public class ButtonTrigger : MonoBehaviour
     public enum ButtonType
     {
         None,
-        Start,  // 게임시작
-        Pause,  // 일시정지
-        UnPause,// 일시정지 해제
-        Manual, // 조작방법
-        Exit,   // 게임종료
-        Restart,// 다시하기
-        Main,   // 메인으로
+        Start,      // 게임시작
+        Pause,      // 일시정지
+        UnPause,    // 일시정지 해제
+        Manual,     // 조작방법
+        OffManual,  // 조작방법 해제
+        Exit,       // 게임종료
+        Restart,    // 다시하기
+        Main,       // 메인으로
     }
 
     /// <summary>
@@ -35,9 +36,17 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     readonly string GameSceneName = "GameScene";
 
+    // 컴포넌트
+    Button button;
+
+    // 싱글톤 미리 받아오기 -> 너무 자주 써서
+    GameManager gameManager;
+    Factory factory;
+    SceneHandler sceneHandler;
+
     private void Awake()
     {
-        Button button = GetComponentInChildren<Button>();
+        button = GetComponentInChildren<Button>();
 
         switch (type)
         {
@@ -52,6 +61,9 @@ public class ButtonTrigger : MonoBehaviour
                 break;
             case ButtonType.Manual:
                 button.onClick.AddListener(OnManual);
+                break;
+            case ButtonType.OffManual:
+                button.onClick.AddListener(OffManual);
                 break;
             case ButtonType.Exit:
                 button.onClick.AddListener(OnExit);
@@ -68,14 +80,24 @@ public class ButtonTrigger : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        gameManager = GameManager.Inst;
+        factory = Factory.Inst;
+        sceneHandler = SceneHandler.Inst;
+    }
+
     /// <summary>
     /// 게임 시작을 위한 함수
     /// </summary>
     private void OnStart()
     {
-        Factory.Inst.DisableEnemy();
-        SceneHandler.Inst.NextSceneName = GameSceneName;
-        GameManager.Inst.GameState = GameState.Play;
+        if (!gameManager.onManualPanel || gameManager.onPasuePanel)
+        {
+            factory.DisableEnemy();
+            sceneHandler.NextSceneName = GameSceneName;
+            gameManager.GameState = GameState.Play;
+        }
     }
 
     /// <summary>
@@ -83,8 +105,13 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnPause()
     {
-        GameManager.Inst.onGamePasue?.Invoke(true);
-        GameManager.Inst.GameState = GameState.Pause;
+        if (!gameManager.onPasuePanel || gameManager.onManualPanel)
+        {
+            button.interactable = false;
+            gameManager.onPasuePanel = true;
+            gameManager.onGamePasue?.Invoke(true);
+            gameManager.GameState = GameState.Pause;
+        }
     }
 
     /// <summary>
@@ -92,8 +119,13 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void UnPause()
     {
-        GameManager.Inst.onGamePasue?.Invoke(false);
-        GameManager.Inst.GameState = GameState.Play;
+        if (gameManager.onPasuePanel)
+        {
+            button.interactable = true;
+            gameManager.onPasuePanel = false;
+            gameManager.onGamePasue?.Invoke(false);
+            gameManager.GameState = GameState.Play;
+        }
     }
 
     /// <summary>
@@ -101,6 +133,23 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnManual()
     {
+        if (!gameManager.onManualPanel)
+        {
+            gameManager.onManualPanel = true;
+            gameManager.onGameManual?.Invoke(true);
+        }
+    }
+
+    /// <summary>
+    /// 메뉴얼 창을 닫는 함수
+    /// </summary>
+    private void OffManual()
+    {
+        if (gameManager.onManualPanel)
+        {
+            gameManager.onManualPanel = false;
+            gameManager.onGameManual?.Invoke(false);
+        }
     }
 
     /// <summary>
@@ -116,9 +165,9 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnRestart()
     {
-        Factory.Inst.DisableEnemy();
-        SceneHandler.Inst.NextSceneName = GameSceneName;
-        GameManager.Inst.GameState = GameState.Play;
+        factory.DisableEnemy();
+        sceneHandler.NextSceneName = GameSceneName;
+        gameManager.GameState = GameState.Play;
     }
 
     /// <summary>
@@ -126,8 +175,8 @@ public class ButtonTrigger : MonoBehaviour
     /// </summary>
     private void OnMain()
     {
-        Factory.Inst.DisableEnemy();
-        SceneHandler.Inst.NextSceneName = MainSceneName;
-        GameManager.Inst.GameState = GameState.Main;
+        factory.DisableEnemy();
+        sceneHandler.NextSceneName = MainSceneName;
+        gameManager.GameState = GameState.Main;
     }
 }

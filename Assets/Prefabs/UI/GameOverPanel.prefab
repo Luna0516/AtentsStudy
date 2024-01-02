@@ -258,7 +258,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8187679558887935574}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -458,11 +458,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 296091183512291832, guid: 556d8a36ac68e5b4fbf8c09d1685b7fe, type: 3}
       propertyPath: type
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1324499586786135552, guid: 556d8a36ac68e5b4fbf8c09d1685b7fe, type: 3}
       propertyPath: type
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4221469004337378769, guid: 556d8a36ac68e5b4fbf8c09d1685b7fe, type: 3}
       propertyPath: m_Name
@@ -502,7 +502,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7455397701257908932, guid: 556d8a36ac68e5b4fbf8c09d1685b7fe, type: 3}
       propertyPath: type
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7647520343055278014, guid: 556d8a36ac68e5b4fbf8c09d1685b7fe, type: 3}
       propertyPath: m_Pivot.x

@@ -96,7 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 2
   maxHealth: 8
-  score: 20
   stopTime: 2.5
   fireDelay: 5
+  bulletSpeed: 12
   speedFactor: 3

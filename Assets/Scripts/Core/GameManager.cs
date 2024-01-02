@@ -153,6 +153,16 @@ public class GameManager : Singleton<GameManager>
     }
 
     /// <summary>
+    /// 일시정지 창이 켜져있는지 확인용 변수
+    /// </summary>
+    public bool onPasuePanel = false;
+
+    /// <summary>
+    /// 메뉴얼 창이 켜져있는지 확인용 변수
+    /// </summary>
+    public bool onManualPanel = false;
+
+    /// <summary>
     /// 게임이 끝나면 신호보내기 (델리게이트) (파라메터 : 게임 클리어 여부)
     /// </summary>
     public System.Action<bool> onGameEnd;
@@ -161,6 +171,11 @@ public class GameManager : Singleton<GameManager>
     /// 게임 일시정지 되면 신호 보내기 (파라메터 : 게임 일시정지 여부)
     /// </summary>
     public System.Action<bool> onGamePasue;
+
+    /// <summary>
+    /// 게임 메뉴얼 버튼이 클릭 되면 신호 보내기 (파라메터 : 게임 메뉴얼 표시 여부)
+    /// </summary>
+    public System.Action<bool> onGameManual;
 
     /// <summary>
     /// 점수가 바뀔때마다 신호를 보낼 델리게이트
@@ -184,10 +199,15 @@ public class GameManager : Singleton<GameManager>
     /// </summary>
     public void Init()
     {
+        // 안하면 이전 씬에 있던 델리게이트 연결되어서 초기화 해줘야 한다
         onGameEnd = null;
         onChangeScore = null;
         onChangePlayerName = null;
         onGamePasue = null;
+        onGameManual = null;
+
+        onPasuePanel = false;
+        onManualPanel = false;
 
         player = FindObjectOfType<Player>();
     }
