@@ -151,27 +151,26 @@ public class RankingPanel : MonoBehaviour
         for (int i = 0; i < rankCount; i++)
         {
             // 각 점수가 갱신된 점수보다 낮으면 뒤로 밀리기
-            if (highScores[i] < score)
+            if (highScores[i] >= score) { continue; }
+
+            // 뒤로 밀기
+            for (int j = rankCount - 1; j > i; j--)
             {
-                // 뒤로 밀기
-                for (int j = rankCount - 1; j > i; j--)
-                {
-                    highScores[j] = highScores[j - 1];
-                    rankerNames[j] = rankerNames[j - 1];
-                }
-
-                highScores[i] = score;
-                rankerNames[i] = GameManager.Inst.PlayerName;
-
-                rankingLines[i].SetData(rankerNames[i], highScores[i], true);
-
-                // 랭킹 위치 위치 기록
-                updatedIndex = i;
-
-                SaveRankingData();
-
-                break;
+                highScores[j] = highScores[j - 1];
+                rankerNames[j] = rankerNames[j - 1];
             }
+
+            highScores[i] = score;
+            rankerNames[i] = GameManager.Inst.PlayerName;
+
+            rankingLines[i].SetData(rankerNames[i], highScores[i], true);
+
+            // 랭킹 위치 위치 기록
+            updatedIndex = i;
+
+            SaveRankingData();
+
+            break;
         }
     }
 
