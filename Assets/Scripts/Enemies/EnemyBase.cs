@@ -142,7 +142,7 @@ public class EnemyBase : PoolObject
 
         // 셔플 함수로 배열 섞기
         Utile.Shuffle(probabilityArray);
-        if (probabilityArray[0] <= probability)
+        if (probabilityArray[0] < probability)
         {
             Factory.Inst.GetObject(PoolObjectType.ItemPowerUp, transform.position);
         }
